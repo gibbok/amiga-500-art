@@ -219,33 +219,6 @@ img {
     linear-gradient(180deg, rgba(255, 95, 170, 0.08), transparent 28%, rgba(2, 4, 12, 0.22) 100%);
 }
 
-.hero-caption {
-  position: absolute;
-  left: 1.4rem;
-  bottom: 1.4rem;
-  padding: 0.9rem 1rem;
-  background: rgba(9, 9, 22, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  max-width: min(66%, 360px);
-}
-
-.hero-caption strong {
-  display: block;
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.68rem;
-  line-height: 1.6;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 0.7rem;
-}
-
-.hero-caption span {
-  display: block;
-  color: var(--muted);
-  font-size: 1.18rem;
-  line-height: 1.25;
-}
-
 .hero-copy {
   display: grid;
   align-content: start;
@@ -733,10 +706,6 @@ function renderIndexPage(artworks: Artwork[]): string {
       <section class="hero-shell">
         <div class="hero-visual">
           <img src="assets/${heroPublishedName}" alt="Retro desk scene with Commodore Amiga 500 setup">
-          <div class="hero-caption">
-            <strong>Deluxe Paint / Brilliance Mood</strong>
-            <span>A physical Amiga desk scene built around the drawing software that shaped the portfolio atmosphere.</span>
-          </div>
         </div>
         <div class="hero-copy">
           <span class="eyebrow">Personal Portfolio</span>
