@@ -752,7 +752,6 @@ function renderAboutPage(): string {
           <h1 class="page-title">Portfolio Notes</h1>
         </div>
         <section class="about-copy" aria-label="About content">
-          <h2 class="detail-title">What To Add Later</h2>
           <p>These are some of the artworks I created in 1991 on my Amiga 500 Plus. I mainly used Deluxe Paint and Brilliance, with additional post-processing in Amiga BASIC.</p>
           <p>At the time, my Amiga had two floppy drives and 2 MB of RAM.</p>
           <p>The images in this portfolio were recovered from VHS backups recorded from my Amiga. This is why some of them appear slightly blurred.</p>
