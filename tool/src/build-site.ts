@@ -17,30 +17,33 @@ const artDir = path.join(repoRoot, "art");
 const websiteDir = path.join(repoRoot, "website");
 const assetsDir = path.join(websiteDir, "assets");
 const publishedArtDir = path.join(assetsDir, "art");
+const heroSourcePath = path.join(repoRoot, "tool", "hero-reference.png");
+const heroPublishedName = "hero-desk.png";
+const heroPublishedPath = path.join(assetsDir, heroPublishedName);
 
 const styles = `
 :root {
-  --bg-1: #060312;
-  --bg-2: #0f1030;
-  --bg-3: #1b0b24;
-  --surface: rgba(8, 10, 26, 0.72);
-  --surface-strong: rgba(10, 12, 34, 0.9);
-  --line: rgba(87, 246, 255, 0.82);
-  --line-soft: rgba(87, 246, 255, 0.2);
-  --pink: #ff5fb9;
-  --blue: #59d9ff;
-  --gold: #ffc76a;
-  --text: #f5f5ff;
-  --muted: #b8c0ff;
+  --bg-top: #0b0a1f;
+  --bg-mid: #12061d;
+  --bg-bottom: #05040d;
+  --panel: rgba(8, 10, 23, 0.78);
+  --panel-strong: rgba(8, 10, 23, 0.92);
+  --line: rgba(92, 232, 255, 0.7);
+  --line-soft: rgba(92, 232, 255, 0.18);
+  --pink: #ff5faa;
+  --cyan: #5ce8ff;
+  --gold: #ffc65c;
+  --text: #f6f3ff;
+  --muted: #c8c0e8;
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
   --max-width: 1320px;
-  --space-1: 0.4rem;
-  --space-2: 0.75rem;
+  --space-1: 0.45rem;
+  --space-2: 0.8rem;
   --space-3: 1rem;
   --space-4: 1.5rem;
   --space-5: 2rem;
   --space-6: 3rem;
   --space-7: 4rem;
-  --shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -58,10 +61,9 @@ body {
   font-family: "VT323", "Courier New", monospace;
   letter-spacing: 0.03em;
   background:
-    radial-gradient(circle at 18% 12%, rgba(255, 95, 185, 0.34), transparent 24%),
-    radial-gradient(circle at 82% 22%, rgba(89, 217, 255, 0.18), transparent 22%),
-    radial-gradient(circle at 50% 78%, rgba(180, 58, 255, 0.18), transparent 32%),
-    linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 42%, #04030b 100%);
+    radial-gradient(circle at 15% 12%, rgba(255, 95, 170, 0.22), transparent 24%),
+    radial-gradient(circle at 82% 20%, rgba(92, 232, 255, 0.18), transparent 22%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 42%, var(--bg-bottom) 100%);
   position: relative;
   overflow-x: hidden;
 }
@@ -77,15 +79,13 @@ body::after {
 body::before {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 100%),
-    linear-gradient(90deg, rgba(89, 217, 255, 0.05) 0 1px, transparent 1px 100%);
-  background-size: 100% 4px, 28px 28px;
+    linear-gradient(90deg, rgba(92, 232, 255, 0.04) 0 1px, transparent 1px 100%);
+  background-size: 100% 4px, 26px 26px;
   opacity: 0.12;
 }
 
 body::after {
-  background:
-    radial-gradient(circle at 50% 100%, rgba(130, 78, 255, 0.35), transparent 24%),
-    linear-gradient(180deg, transparent 0%, rgba(4, 2, 18, 0.46) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(4, 4, 13, 0.5) 100%);
 }
 
 a {
@@ -102,47 +102,45 @@ img {
 .shell {
   width: min(calc(100% - 2rem), var(--max-width));
   margin: 0 auto;
-  padding: 1.4rem 0 var(--space-7);
+  padding: 1.25rem 0 var(--space-7);
   position: relative;
 }
 
 .shell::before {
   content: "";
   position: absolute;
-  left: 52%;
-  top: 8.2rem;
-  width: min(50vw, 720px);
-  height: min(34vw, 360px);
-  transform: translateX(-8%);
-  background:
-    linear-gradient(180deg, rgba(255, 95, 185, 0.85), rgba(255, 95, 185, 0.12) 3px, transparent 3px),
-    linear-gradient(90deg, rgba(89, 217, 255, 0.36) 1px, transparent 1px);
-  background-size: 100% 100%, 28px 18px;
-  clip-path: polygon(0 100%, 100% 100%, 88% 42%, 72% 58%, 57% 40%, 42% 61%, 24% 45%, 8% 64%);
+  right: 6%;
+  top: 4rem;
+  width: min(32vw, 380px);
+  height: min(32vw, 380px);
+  border: 4px solid rgba(255, 95, 170, 0.36);
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 22px rgba(255, 95, 170, 0.2));
   opacity: 0.5;
-  filter: drop-shadow(0 0 18px rgba(255, 95, 185, 0.35));
   z-index: 0;
 }
 
 .shell::after {
   content: "";
   position: absolute;
-  top: 2rem;
-  left: 25%;
-  width: 240px;
-  height: 240px;
-  border: 5px solid rgba(255, 95, 185, 0.72);
-  transform: rotate(45deg);
-  opacity: 0.5;
-  filter: drop-shadow(0 0 20px rgba(255, 95, 185, 0.35));
+  right: 8%;
+  top: 17rem;
+  width: min(42vw, 560px);
+  height: min(22vw, 260px);
+  background:
+    linear-gradient(180deg, rgba(255, 95, 170, 0.75), rgba(255, 95, 170, 0.06) 3px, transparent 3px),
+    linear-gradient(90deg, rgba(92, 232, 255, 0.28) 1px, transparent 1px);
+  background-size: 100% 100%, 28px 22px;
+  clip-path: polygon(0 100%, 100% 100%, 90% 55%, 70% 66%, 58% 48%, 40% 68%, 25% 52%, 10% 70%);
+  opacity: 0.42;
   z-index: 0;
 }
 
 .topbar,
-.feature-stage,
+.hero-shell,
+.portfolio-shell,
 .detail-shell,
 .about-shell,
-.gallery-shell,
 .footer {
   position: relative;
   z-index: 1;
@@ -154,26 +152,24 @@ img {
   justify-content: space-between;
   gap: var(--space-3);
   margin-bottom: var(--space-5);
-  padding: 0.8rem 0;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.95rem;
   font-family: "Press Start 2P", monospace;
   font-size: clamp(0.72rem, 1.5vw, 0.95rem);
   text-transform: uppercase;
   color: var(--text);
-  text-shadow: 0 0 16px rgba(255, 95, 185, 0.42);
+  text-shadow: 0 0 18px rgba(255, 95, 170, 0.35);
 }
 
 .brand-mark {
-  width: 1.2rem;
-  height: 1.2rem;
-  background: linear-gradient(90deg, var(--pink) 0 50%, var(--blue) 50% 100%);
-  clip-path: polygon(50% 0%, 100% 45%, 80% 100%, 20% 100%, 0% 45%);
-  box-shadow: 0 0 16px rgba(255, 95, 185, 0.52);
+  width: 1.15rem;
+  height: 1.15rem;
+  background: linear-gradient(90deg, var(--pink) 0 50%, var(--cyan) 50% 100%);
+  clip-path: polygon(50% 0%, 100% 45%, 82% 100%, 18% 100%, 0% 45%);
 }
 
 .nav {
@@ -183,13 +179,12 @@ img {
 }
 
 .nav a {
-  padding: 0.65rem 0;
+  padding: 0.7rem 0;
   font-family: "Press Start 2P", monospace;
   font-size: 0.72rem;
   text-transform: uppercase;
-  color: var(--blue);
+  color: var(--cyan);
   border-bottom: 3px solid transparent;
-  transition: color 120ms ease, border-color 120ms ease;
 }
 
 .nav a:hover,
@@ -200,269 +195,98 @@ img {
   outline: none;
 }
 
-.feature-stage {
+.hero-shell {
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+  grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
   gap: var(--space-5);
   align-items: stretch;
-  min-height: 680px;
 }
 
-.showcase-left {
+.hero-visual {
   position: relative;
-  min-height: 640px;
-  padding: 1rem 0 0 1rem;
-}
-
-.showcase-desk {
-  position: absolute;
-  inset: 3.5rem 5rem 2.5rem 0;
-  border-radius: 38px;
-  background:
-    radial-gradient(circle at 14% 34%, rgba(255, 144, 164, 0.75), transparent 17%),
-    radial-gradient(circle at 58% 14%, rgba(255, 86, 175, 0.5), transparent 19%),
-    linear-gradient(180deg, rgba(32, 12, 30, 0.55) 0%, rgba(10, 9, 28, 0.22) 34%, rgba(9, 5, 18, 0) 66%),
-    linear-gradient(180deg, rgba(17, 9, 15, 0.1) 0%, rgba(65, 23, 13, 0.26) 72%, rgba(59, 27, 15, 0.85) 100%);
+  min-height: 620px;
+  background: linear-gradient(180deg, rgba(8, 8, 20, 0.74), rgba(8, 8, 20, 0.36));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow);
   overflow: hidden;
 }
 
-.showcase-desk::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 34%;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(37, 16, 10, 0.28) 12%, rgba(76, 34, 15, 0.95) 100%);
-}
-
-.poster-stack {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: grid;
-  gap: 1rem;
-}
-
-.poster-card {
-  width: 170px;
-  aspect-ratio: 0.72;
-  padding: 0.75rem;
-  border: 2px solid rgba(255, 95, 185, 0.4);
-  background: rgba(11, 8, 17, 0.72);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.38);
-  transform: rotate(-5deg);
-}
-
-.poster-card.alt {
-  margin-left: 3rem;
-  transform: rotate(2deg);
-}
-
-.poster-card strong,
-.poster-card span {
-  display: block;
-}
-
-.poster-card strong {
-  font-family: "Press Start 2P", monospace;
-  font-size: 1rem;
-  line-height: 1.45;
-  color: #ff7d6f;
-}
-
-.poster-card span {
-  margin-top: 1rem;
-  font-size: 2rem;
-  color: var(--gold);
-}
-
-.monitor {
-  position: absolute;
-  left: 18%;
-  top: 12%;
-  width: min(31vw, 455px);
-  aspect-ratio: 1 / 0.84;
-  border-radius: 22px;
-  padding: 1.15rem;
-  background: linear-gradient(145deg, #d4beb2 0%, #8f7770 100%);
-  box-shadow:
-    inset 0 0 0 2px rgba(255, 255, 255, 0.16),
-    0 30px 60px rgba(0, 0, 0, 0.48);
-}
-
-.monitor-screen {
+.hero-visual img {
+  width: 100%;
   height: 100%;
-  border-radius: 12px;
-  padding: 0.8rem;
-  background: linear-gradient(180deg, #201559 0%, #0f113f 100%);
-  box-shadow:
-    inset 0 0 0 2px rgba(255, 255, 255, 0.14),
-    inset 0 0 32px rgba(0, 0, 0, 0.52);
+  object-fit: cover;
 }
 
-.monitor-ui {
-  height: 100%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  background:
-    radial-gradient(circle at 56% 42%, rgba(100, 210, 255, 0.88), rgba(54, 48, 192, 0) 18%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0 10%, transparent 10%),
-    linear-gradient(135deg, rgba(255, 184, 90, 0.26), rgba(145, 42, 220, 0.18)),
-    linear-gradient(180deg, #2e39b5 0%, #331363 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.monitor-ui::before {
+.hero-visual::after {
   content: "";
   position: absolute;
-  inset: 18% 18% 12% 18%;
+  inset: 0;
   background:
-    radial-gradient(circle at 52% 35%, rgba(255, 233, 146, 0.5), transparent 18%),
-    conic-gradient(from 0deg, #5fd9ff, #5679ff, #ff75c5, #5fd9ff);
-  border-radius: 50%;
-  opacity: 0.85;
+    linear-gradient(90deg, rgba(5, 6, 14, 0.16) 0%, rgba(5, 6, 14, 0.04) 38%, rgba(5, 6, 14, 0.56) 100%),
+    linear-gradient(180deg, rgba(255, 95, 170, 0.08), transparent 28%, rgba(2, 4, 12, 0.22) 100%);
 }
 
-.monitor-ui::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 8%;
-  height: 28%;
-  background:
-    linear-gradient(135deg, rgba(255, 166, 89, 0.95) 25%, transparent 25% 50%, rgba(255, 166, 89, 0.95) 50% 75%, transparent 75%),
-    linear-gradient(225deg, rgba(102, 75, 255, 0.95) 25%, transparent 25% 50%, rgba(102, 75, 255, 0.95) 50% 75%, transparent 75%);
-  background-size: 54px 54px;
-  opacity: 0.75;
-}
-
-.keyboard {
-  position: absolute;
-  left: 10%;
-  right: 12%;
-  bottom: 5%;
-  height: 210px;
-  border-radius: 24px 24px 34px 34px;
-  background: linear-gradient(180deg, #dcc7bd 0%, #aa8c7c 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 28px 48px rgba(0, 0, 0, 0.42);
-  overflow: hidden;
-}
-
-.keyboard::before {
-  content: "";
+.hero-caption {
   position: absolute;
   left: 1.4rem;
-  right: 1.4rem;
-  top: 1.1rem;
-  height: 52px;
-  background: repeating-linear-gradient(90deg, rgba(113, 90, 80, 0.3) 0 2px, transparent 2px 7px);
-  opacity: 0.7;
+  bottom: 1.4rem;
+  padding: 0.9rem 1rem;
+  background: rgba(9, 9, 22, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  max-width: min(66%, 360px);
 }
 
-.keyboard::after {
-  content: "";
-  position: absolute;
-  left: 2rem;
-  right: 2rem;
-  bottom: 2rem;
-  height: 72px;
-  background: repeating-linear-gradient(90deg, #f8ebdc 0 22px, #b09180 22px 25px);
-  border-radius: 10px;
-  box-shadow: 0 -36px 0 -18px rgba(250, 238, 224, 0.9);
-}
-
-.media-pile {
-  position: absolute;
-  right: 2%;
-  bottom: 2%;
-  display: grid;
-  gap: 1rem;
-  transform: rotate(-10deg);
-}
-
-.media-card {
-  width: 230px;
-  padding: 1rem;
-  background: rgba(10, 10, 26, 0.86);
-  border: 2px solid rgba(255, 95, 185, 0.36);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.34);
-}
-
-.media-card strong {
+.hero-caption strong {
   display: block;
   font-family: "Press Start 2P", monospace;
-  font-size: 1rem;
-  line-height: 1.35;
-  color: #ff6449;
-}
-
-.media-card span {
-  display: block;
-  margin-top: 0.7rem;
-  font-size: 1.6rem;
+  font-size: 0.68rem;
+  line-height: 1.6;
   color: var(--gold);
-}
-
-.showcase-right {
-  display: grid;
-  align-content: start;
-  gap: var(--space-5);
-  padding-top: 1rem;
-}
-
-.hero-ui {
-  padding-top: 1.1rem;
-}
-
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 1.2rem;
-  padding: 0.45rem 0.8rem;
-  color: var(--blue);
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.7rem;
   text-transform: uppercase;
-  border: 2px solid rgba(89, 217, 255, 0.45);
-  background: rgba(11, 14, 34, 0.65);
-  box-shadow: inset 0 0 0 1px rgba(255, 95, 185, 0.22);
+  margin-bottom: 0.7rem;
 }
 
-.hero-title,
-.page-title {
-  margin: 0;
-  font-family: "Press Start 2P", monospace;
-  font-size: clamp(1.9rem, 3vw, 3.7rem);
-  line-height: 1.2;
-  text-transform: uppercase;
-  text-shadow: 0 0 24px rgba(255, 95, 185, 0.32);
-}
-
-.hero-ui p,
-.lede,
-.detail-copy p,
-.about-copy p,
-.section-intro p {
-  margin: 0;
+.hero-caption span {
+  display: block;
   color: var(--muted);
-  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
-  line-height: 1.34;
+  font-size: 1.18rem;
+  line-height: 1.25;
 }
 
 .hero-copy {
   display: grid;
+  align-content: start;
   gap: var(--space-4);
+  padding-top: 1.2rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 0.45rem 0.8rem;
+  color: var(--cyan);
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  border: 2px solid rgba(92, 232, 255, 0.36);
+  background: rgba(10, 13, 28, 0.64);
+}
+
+.hero-frame,
+.detail-hero,
+.about-hero,
+.detail-copy,
+.about-copy,
+.identity-panel,
+.portfolio-note,
+.detail-stage {
+  background: linear-gradient(180deg, rgba(10, 12, 28, 0.84), rgba(7, 8, 19, 0.58));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
 }
 
 .hero-frame {
+  padding: 1.7rem;
   position: relative;
-  padding: 1.8rem 1.7rem 1.7rem;
-  background: linear-gradient(180deg, rgba(9, 10, 32, 0.7), rgba(5, 7, 20, 0.28));
 }
 
 .hero-frame::before {
@@ -472,19 +296,29 @@ img {
   right: 1rem;
   top: 0;
   height: 6px;
-  background: linear-gradient(90deg, transparent 0 4%, var(--pink) 4% 96%, transparent 96%);
+  background: linear-gradient(90deg, transparent 0 3%, var(--pink) 3% 96%, transparent 96%);
 }
 
-.hero-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0.75rem;
-  border: 2px solid rgba(255, 95, 185, 0.58);
-  border-left-width: 0;
-  border-bottom-width: 0;
-  clip-path: polygon(0 8%, 8% 0, 100% 0, 100% 92%, 92% 100%, 0 100%);
-  opacity: 0.7;
-  pointer-events: none;
+.hero-title,
+.page-title {
+  margin: 0;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(1.85rem, 3vw, 3.45rem);
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(255, 95, 170, 0.22);
+}
+
+.hero-copy p,
+.lede,
+.about-copy p,
+.detail-copy p,
+.portfolio-intro p,
+.portfolio-note p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(1.2rem, 1.8vw, 1.58rem);
+  line-height: 1.34;
 }
 
 .hero-actions,
@@ -503,125 +337,111 @@ img {
   font-family: "Press Start 2P", monospace;
   font-size: 0.72rem;
   text-transform: uppercase;
-  color: #fefcff;
-  background: rgba(255, 95, 185, 0.14);
-  border: 2px solid rgba(255, 95, 185, 0.72);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 0 20px rgba(255, 95, 185, 0.14);
-  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+  color: #fff8fe;
+  background: rgba(255, 95, 170, 0.14);
+  border: 2px solid rgba(255, 95, 170, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .button-link.alt {
-  background: rgba(89, 217, 255, 0.08);
-  border-color: rgba(89, 217, 255, 0.7);
-  color: var(--blue);
+  color: var(--cyan);
+  background: rgba(92, 232, 255, 0.08);
+  border-color: rgba(92, 232, 255, 0.62);
 }
 
 .button-link:hover,
 .button-link:focus-visible {
   transform: translateY(-2px);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 0 24px rgba(255, 95, 185, 0.24);
   outline: none;
 }
 
-.stats-strip {
+.identity-panel {
+  padding: 1.2rem;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.stat-box {
-  padding: 1rem 1rem 1.1rem;
-  background: linear-gradient(180deg, rgba(10, 14, 39, 0.88), rgba(10, 10, 25, 0.54));
-  border: 2px solid rgba(89, 217, 255, 0.28);
-  box-shadow: var(--shadow);
-}
-
-.stat-box strong,
-.stat-box span {
-  display: block;
-}
-
-.stat-box strong {
+.identity-panel strong {
   font-family: "Press Start 2P", monospace;
-  font-size: 0.62rem;
-  color: var(--blue);
+  font-size: 0.66rem;
+  color: var(--gold);
   text-transform: uppercase;
-  margin-bottom: 0.9rem;
 }
 
-.stat-box span {
-  font-size: clamp(1.8rem, 3vw, 2.7rem);
-  color: var(--text);
+.identity-panel ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
 }
 
-.gallery-shell,
+.identity-panel li {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  font-size: 1.2rem;
+}
+
+.portfolio-shell,
 .detail-shell,
 .about-shell {
   margin-top: var(--space-7);
 }
 
-.section-intro {
+.portfolio-head {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(240px, 0.8fr);
+  grid-template-columns: minmax(0, 0.94fr) minmax(260px, 0.8fr);
   gap: var(--space-5);
   align-items: end;
   margin-bottom: var(--space-5);
 }
 
-.section-intro h2,
+.portfolio-intro h2,
 .detail-title {
-  margin: 0;
+  margin: 0 0 0.9rem;
   font-family: "Press Start 2P", monospace;
-  font-size: clamp(1.05rem, 2vw, 1.45rem);
+  font-size: clamp(1.02rem, 2vw, 1.42rem);
   line-height: 1.5;
   text-transform: uppercase;
 }
 
-.section-rule {
-  height: 18px;
-  background:
-    linear-gradient(90deg, transparent 0 2%, var(--pink) 2% 90%, transparent 90%),
-    linear-gradient(90deg, transparent 0 8%, var(--blue) 8% 14%, transparent 14% 100%);
-  clip-path: polygon(0 50%, 3% 0, 96% 0, 100% 50%, 96% 100%, 3% 100%);
-  opacity: 0.92;
+.portfolio-note {
+  padding: 1.2rem;
 }
 
-.gallery-grid {
+.portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.3rem;
 }
 
-.gallery-card {
-  background: linear-gradient(180deg, rgba(10, 12, 31, 0.9), rgba(8, 8, 20, 0.62));
-  border: 1px solid rgba(255, 255, 255, 0.06);
+.portfolio-card {
+  background: linear-gradient(180deg, rgba(10, 12, 30, 0.9), rgba(7, 7, 18, 0.66));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow);
   overflow: hidden;
 }
 
-.gallery-card:nth-child(3n + 2) {
-  transform: translateY(1.2rem);
+.portfolio-card:nth-child(3n + 2) {
+  transform: translateY(1rem);
 }
 
-.gallery-card:nth-child(4n) {
-  transform: translateY(-0.8rem);
+.portfolio-card:nth-child(4n) {
+  transform: translateY(-0.7rem);
 }
 
-.gallery-card figure {
+.portfolio-card figure {
   margin: 0;
 }
 
-.gallery-card img {
+.portfolio-card img {
   width: 100%;
   aspect-ratio: 5 / 4;
   object-fit: cover;
 }
 
-.gallery-card figcaption {
+.portfolio-card figcaption {
   padding: 1rem 1rem 1.2rem;
   display: grid;
   gap: 0.7rem;
@@ -637,13 +457,9 @@ img {
 .card-title {
   margin: 0;
   font-family: "Press Start 2P", monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.55;
   text-transform: uppercase;
-}
-
-.card-link {
-  justify-self: start;
 }
 
 .detail-shell,
@@ -654,23 +470,13 @@ img {
 
 .detail-hero,
 .about-hero,
-.detail-stage,
-.detail-copy,
-.about-copy {
-  background: linear-gradient(180deg, rgba(10, 13, 36, 0.85), rgba(6, 7, 20, 0.56));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: var(--shadow);
-}
-
-.detail-hero,
-.about-hero,
 .detail-copy,
 .about-copy {
   padding: var(--space-5);
 }
 
 .detail-stage {
-  padding: 1.4rem;
+  padding: 1.35rem;
   display: flex;
   justify-content: center;
 }
@@ -683,14 +489,14 @@ img {
   width: 100%;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 16px 38px rgba(0, 0, 0, 0.42);
+    0 14px 34px rgba(0, 0, 0, 0.4);
 }
 
 .detail-meta-line {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  color: var(--blue);
+  color: var(--cyan);
   font-family: "Press Start 2P", monospace;
   font-size: 0.62rem;
   text-transform: uppercase;
@@ -700,21 +506,17 @@ img {
   margin-top: var(--space-7);
   padding-top: var(--space-5);
   color: var(--muted);
-  font-size: 1.2rem;
+  font-size: 1.18rem;
 }
 
 @media (max-width: 1120px) {
-  .feature-stage,
-  .section-intro {
+  .hero-shell,
+  .portfolio-head {
     grid-template-columns: 1fr;
   }
 
-  .showcase-left {
-    min-height: 560px;
-  }
-
-  .monitor {
-    width: min(48vw, 430px);
+  .hero-visual {
+    min-height: 520px;
   }
 }
 
@@ -724,9 +526,7 @@ img {
   }
 
   .shell::before,
-  .shell::after,
-  .poster-stack,
-  .media-pile {
+  .shell::after {
     display: none;
   }
 
@@ -735,41 +535,19 @@ img {
     align-items: flex-start;
   }
 
-  .showcase-left {
-    min-height: 440px;
-    padding: 0;
-  }
-
-  .showcase-desk {
-    inset: 0;
-  }
-
-  .monitor {
-    left: 12%;
-    top: 10%;
-    width: min(66vw, 420px);
-  }
-
-  .keyboard {
-    left: 6%;
-    right: 6%;
-    height: 170px;
-  }
-
-  .stats-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .gallery-card:nth-child(3n + 2),
-  .gallery-card:nth-child(4n) {
-    transform: none;
-  }
-
+  .identity-panel,
+  .hero-frame,
   .detail-hero,
   .about-hero,
   .detail-copy,
-  .about-copy {
+  .about-copy,
+  .portfolio-note {
     padding: var(--space-4);
+  }
+
+  .portfolio-card:nth-child(3n + 2),
+  .portfolio-card:nth-child(4n) {
+    transform: none;
   }
 }
 
@@ -786,9 +564,12 @@ img {
     justify-content: center;
   }
 
-  .monitor {
-    left: 8%;
-    width: 74vw;
+  .hero-visual {
+    min-height: 360px;
+  }
+
+  .hero-caption {
+    max-width: calc(100% - 2rem);
   }
 
   .hero-title,
@@ -873,16 +654,16 @@ function renderLayout(options: {
       <header class="topbar">
         <a class="brand" href="${indexHref}">
           <span class="brand-mark" aria-hidden="true"></span>
-          <span>Amiga 500 Art</span>
+          <span>Amiga 500 Portfolio</span>
         </a>
         <nav class="nav" aria-label="Primary">
-          <a href="${indexHref}"${isIndex ? ` aria-current="page"` : ""}>Gallery</a>
+          <a href="${indexHref}"${isIndex ? ` aria-current="page"` : ""}>Portfolio</a>
           <a href="${aboutHref}"${isAbout ? ` aria-current="page"` : ""}>About</a>
         </nav>
       </header>
       ${options.content}
       <footer class="footer">
-        Commodore Amiga 500 artwork portfolio. Static site generated from the repository archive.
+        Personal Commodore Amiga 500 portfolio. Static site generated from the repository archive.
       </footer>
     </div>
   </body>
@@ -929,13 +710,13 @@ function buildArtworks(): Artwork[] {
 function renderIndexPage(artworks: Artwork[]): string {
   const cards = artworks
     .map((artwork, index) => {
-      return `<article class="gallery-card">
+      return `<article class="portfolio-card">
   <figure>
     <img src="${artwork.imagePath}" alt="${escapeHtml(artwork.title)}">
     <figcaption>
-      <span class="card-index">Archive ${String(index + 1).padStart(3, "0")}</span>
+      <span class="card-index">Entry ${String(index + 1).padStart(3, "0")}</span>
       <h3 class="card-title">${escapeHtml(artwork.title)}</h3>
-      <a class="button-link card-link" href="${artwork.detailPath}">Open Artwork</a>
+      <a class="button-link" href="${artwork.detailPath}">View Piece</a>
     </figcaption>
   </figure>
 </article>`;
@@ -943,76 +724,50 @@ function renderIndexPage(artworks: Artwork[]): string {
     .join("\n");
 
   return renderLayout({
-    pageTitle: "Amiga 500 Art Gallery",
-    description: "Retro gallery portfolio for Commodore Amiga 500 artwork.",
+    pageTitle: "Amiga 500 Portfolio",
+    description: "Personal Commodore Amiga 500 portfolio website.",
     currentPath: path.join(websiteDir, "index.html"),
     content: `
-      <section class="feature-stage">
-        <div class="showcase-left" aria-hidden="true">
-          <div class="showcase-desk"></div>
-          <div class="poster-stack">
-            <div class="poster-card">
-              <strong>Another<br>World</strong>
-              <span>Pixel icon mood</span>
-            </div>
-            <div class="poster-card alt">
-              <strong>Shadow<br>Of The Beast</strong>
-              <span>Neon fantasy energy</span>
-            </div>
-          </div>
-          <div class="monitor">
-            <div class="monitor-screen">
-              <div class="monitor-ui"></div>
-            </div>
-          </div>
-          <div class="keyboard"></div>
-          <div class="media-pile">
-            <div class="media-card">
-              <strong>AMIGA<br>FORMAT</strong>
-              <span>Creative machine, forever luminous.</span>
-            </div>
+      <section class="hero-shell">
+        <div class="hero-visual">
+          <img src="assets/${heroPublishedName}" alt="Retro desk scene with Commodore Amiga 500 setup">
+          <div class="hero-caption">
+            <strong>Deluxe Paint / Brilliance Mood</strong>
+            <span>A physical Amiga desk scene built around the drawing software that shaped the portfolio atmosphere.</span>
           </div>
         </div>
-        <div class="showcase-right">
-          <div class="hero-ui">
-            <span class="eyebrow">Portfolio Broadcast</span>
-            <div class="hero-frame">
-              <div class="hero-copy">
-                <h1 class="hero-title">A Neon Archive For Commodore Amiga 500 Artwork</h1>
-                <p>This collection is presented like an Amiga shrine: glowing horizon, collectible desk atmosphere, and a scrolling wall of original images captured from the archive.</p>
-                <div class="hero-actions">
-                  <a class="button-link" href="#gallery">Enter Gallery</a>
-                  <a class="button-link alt" href="about/">Read About</a>
-                </div>
-              </div>
+        <div class="hero-copy">
+          <span class="eyebrow">Personal Portfolio</span>
+          <div class="hero-frame">
+            <h1 class="hero-title">Commodore Amiga 500 Work, Framed Like A Real Desk Shrine</h1>
+            <p>This site is a personal portfolio for my Amiga 500 creative work. The mood is intentionally physical and nostalgic: hardware glow, Deluxe Paint, Brilliance, floppy disks, and the feeling of a machine that still matters.</p>
+            <div class="hero-actions">
+              <a class="button-link" href="#portfolio">Browse Work</a>
+              <a class="button-link alt" href="about/">About Me</a>
             </div>
           </div>
-          <div class="stats-strip" aria-label="Portfolio stats">
-            <div class="stat-box">
-              <strong>Works Online</strong>
-              <span>${artworks.length}</span>
-            </div>
-            <div class="stat-box">
-              <strong>Platform</strong>
-              <span>Amiga 500</span>
-            </div>
-            <div class="stat-box">
-              <strong>Format</strong>
-              <span>PNG</span>
-            </div>
-          </div>
+          <aside class="identity-panel" aria-label="Portfolio identity">
+            <strong>What This Site Is</strong>
+            <ul>
+              <li>A personal showcase, not a neutral stock gallery.</li>
+              <li>An archive of Amiga 500 images generated from the repository artwork folder.</li>
+              <li>A retro presentation with a stronger sense of place and memory.</li>
+            </ul>
+          </aside>
         </div>
       </section>
 
-      <section id="gallery" class="gallery-shell" aria-labelledby="gallery-title">
-        <div class="section-intro">
-          <div>
-            <h2 id="gallery-title">Gallery Transmission</h2>
-            <p>A responsive archive wall of screenshots, arranged as collectible entries instead of plain thumbnails.</p>
+      <section id="portfolio" class="portfolio-shell" aria-labelledby="portfolio-title">
+        <div class="portfolio-head">
+          <div class="portfolio-intro">
+            <h2 id="portfolio-title">Portfolio Archive</h2>
+            <p>The grid below is the body of the work. The homepage now acts as an introduction to the person and the machine behind it, with the archive sitting underneath as the collection itself.</p>
           </div>
-          <div class="section-rule" aria-hidden="true"></div>
+          <div class="portfolio-note">
+            <p><strong>${artworks.length}</strong> image entries are published from the current repository set, each with its own detail page at original maximum display size.</p>
+          </div>
         </div>
-        <div class="gallery-grid">
+        <div class="portfolio-grid">
           ${cards}
         </div>
       </section>
@@ -1022,23 +777,22 @@ function renderIndexPage(artworks: Artwork[]): string {
 
 function renderAboutPage(): string {
   return renderLayout({
-    pageTitle: "About | Amiga 500 Art",
-    description: "About page for the Amiga 500 artwork portfolio.",
+    pageTitle: "About | Amiga 500 Portfolio",
+    description: "About page for the Amiga 500 personal portfolio.",
     currentPath: path.join(websiteDir, "about", "index.html"),
     content: `
       <section class="about-shell">
         <div class="about-hero">
           <span class="eyebrow">About</span>
           <h1 class="page-title">Portfolio Notes</h1>
-          <p class="lede">A placeholder page ready for your own story, process, and context without redesigning the structure.</p>
+          <p class="lede">This page is reserved for your own biography, process, hardware notes, and context around the work.</p>
         </div>
         <section class="about-copy" aria-label="About content">
           <h2 class="detail-title">What To Add Later</h2>
-          <p>Add your biography, process notes, hardware setup, and any creative context behind the work in this archive.</p>
-          <p>You can also describe how the images were produced, what software or workflows you used, and why the Amiga 500 still matters to your practice.</p>
-          <p>The page is intentionally simple so future content can expand without touching the layout generator.</p>
+          <p>Introduce yourself, explain your connection to the Amiga 500, and describe the creative methods or tools behind the work shown here.</p>
+          <p>You can also use this page to talk about the machine, your setup, favorite software, or how this portfolio connects to your wider practice.</p>
           <div>
-            <a class="button-link" href="../index.html">Back To Gallery</a>
+            <a class="button-link" href="../index.html">Back To Portfolio</a>
           </div>
         </section>
       </section>
@@ -1058,8 +812,8 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
   const nextHref = next ? relativePath(pageDir, path.join(websiteDir, next.detailPath)) : indexHref;
 
   return renderLayout({
-    pageTitle: `${artwork.title} | Amiga 500 Art`,
-    description: `${artwork.title} from the Commodore Amiga 500 artwork portfolio.`,
+    pageTitle: `${artwork.title} | Amiga 500 Portfolio`,
+    description: `${artwork.title} from the Commodore Amiga 500 portfolio.`,
     currentPath: pagePath,
     content: `
       <section class="detail-shell">
@@ -1079,11 +833,11 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
             <span>Original size ${artwork.width} x ${artwork.height}</span>
             <span>Sequence ${String(currentIndex + 1).padStart(3, "0")}</span>
           </div>
-          <p>This page keeps the image at its original maximum display size, preserving the source file without scaling it beyond its native resolution.</p>
+          <p>This page keeps the image at its original maximum display size, preserving the source file without enlarging it beyond its native resolution.</p>
           <div class="detail-nav">
-            <a class="button-link" href="${indexHref}">Back To Gallery</a>
-            <a class="button-link alt" href="${previousHref}">${previous ? "Previous Artwork" : "Gallery Start"}</a>
-            <a class="button-link alt" href="${nextHref}">${next ? "Next Artwork" : "Gallery Start"}</a>
+            <a class="button-link" href="${indexHref}">Back To Portfolio</a>
+            <a class="button-link alt" href="${previousHref}">${previous ? "Previous Piece" : "Portfolio Start"}</a>
+            <a class="button-link alt" href="${nextHref}">${next ? "Next Piece" : "Portfolio Start"}</a>
           </div>
         </section>
       </section>
@@ -1094,12 +848,17 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
 function buildSite(): void {
   const artworks = buildArtworks();
 
+  if (!existsSync(heroSourcePath)) {
+    throw new Error("Expected tool/hero-reference.png for the homepage hero image.");
+  }
+
   rmSync(websiteDir, { recursive: true, force: true });
   ensureDir(publishedArtDir);
   ensureDir(path.join(websiteDir, "about"));
   ensureDir(path.join(websiteDir, "art"));
 
   cpSync(artDir, publishedArtDir, { recursive: true });
+  cpSync(heroSourcePath, heroPublishedPath);
   writeFileSync(path.join(websiteDir, ".nojekyll"), "");
   writeFileSync(path.join(assetsDir, "site.css"), styles);
   writePage(path.join(websiteDir, "index.html"), renderIndexPage(artworks));
