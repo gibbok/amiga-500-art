@@ -17,12 +17,30 @@ const artDir = path.join(repoRoot, "art");
 const websiteDir = path.join(repoRoot, "website");
 const assetsDir = path.join(websiteDir, "assets");
 const publishedArtDir = path.join(assetsDir, "art");
+const sourceFontsDir = path.join(repoRoot, "tool", "fonts");
+const publishedFontsDir = path.join(assetsDir, "fonts");
 const heroSourcePath = path.join(repoRoot, "tool", "hero-reference.png");
 const heroPublishedName = "hero-desk.png";
 const heroPublishedPath = path.join(assetsDir, heroPublishedName);
 const chromeDevtoolsConfigPath = path.join(websiteDir, ".well-known", "appspecific", "com.chrome.devtools.json");
 
 const styles = `
+@font-face {
+  font-family: "Press Start 2P";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("fonts/press-start-2p.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "VT323";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("fonts/vt323.woff2") format("woff2");
+}
+
 :root {
   --bg-top: #0b0a1f;
   --bg-mid: #12061d;
@@ -597,6 +615,8 @@ function renderLayout(options: {
 }): string {
   const currentDir = path.dirname(options.currentPath);
   const stylesheetHref = relativePath(currentDir, path.join(assetsDir, "site.css"));
+  const pressStartFontHref = relativePath(currentDir, path.join(publishedFontsDir, "press-start-2p.woff2"));
+  const vt323FontHref = relativePath(currentDir, path.join(publishedFontsDir, "vt323.woff2"));
   const socialImageHref = relativePath(currentDir, heroPublishedPath);
   const indexHref = relativePath(currentDir, path.join(websiteDir, "index.html"));
   const aboutHref = relativePath(currentDir, path.join(websiteDir, "about", "index.html"));
@@ -622,9 +642,8 @@ function renderLayout(options: {
     <meta name="twitter:title" content="${escapeHtml(options.pageTitle)}">
     <meta name="twitter:description" content="${escapeHtml(options.description)}">
     <meta name="twitter:image" content="${socialImageHref}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="preload" href="${pressStartFontHref}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="${vt323FontHref}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="${stylesheetHref}">
   </head>
   <body${options.bodyClass ? ` class="${escapeHtml(options.bodyClass)}"` : ""}>
@@ -815,14 +834,19 @@ function buildSite(): void {
   if (!existsSync(heroSourcePath)) {
     throw new Error("Expected tool/hero-reference.png for the homepage hero image.");
   }
+  if (!existsSync(sourceFontsDir)) {
+    throw new Error("Expected tool/fonts with self-hosted font files.");
+  }
 
   rmSync(websiteDir, { recursive: true, force: true });
   ensureDir(publishedArtDir);
+  ensureDir(publishedFontsDir);
   ensureDir(path.join(websiteDir, "about"));
   ensureDir(path.join(websiteDir, "art"));
   ensureDir(path.dirname(chromeDevtoolsConfigPath));
 
   cpSync(artDir, publishedArtDir, { recursive: true });
+  cpSync(sourceFontsDir, publishedFontsDir, { recursive: true });
   cpSync(heroSourcePath, heroPublishedPath);
   writeFileSync(path.join(websiteDir, ".nojekyll"), "");
   writeFileSync(chromeDevtoolsConfigPath, "{}\n");
