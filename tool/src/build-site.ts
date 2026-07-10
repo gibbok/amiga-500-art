@@ -809,7 +809,6 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
             <span>Original size ${artwork.width} x ${artwork.height}</span>
             <span>Sequence ${String(currentIndex + 1).padStart(3, "0")}</span>
           </div>
-          <p>This page keeps the image at its original maximum display size, preserving the source file without enlarging it beyond its native resolution.</p>
           <div class="detail-nav">
             <a class="button-link" href="${indexHref}">Back To Portfolio</a>
             <a class="button-link alt" href="${previousHref}">${previous ? "Previous Piece" : "Portfolio Start"}</a>
