@@ -22,8 +22,8 @@
               --borderColor: rgba(92, 232, 255, 0.34);
               --backdropBackgroundColor: rgba(5, 4, 13, 0.58);
               --backdropBackgroundBlur: 2px;
-              --cookieIconColor: #080a17;
-              --cookieIconBackgroundColor: #5ce8ff;
+              --cookieIconColor: #160820;
+              --cookieIconBackgroundColor: #a78bc8;
               position: fixed;
   bottom: 0;
   right: 0;
@@ -498,10 +498,10 @@
   height: 54px;
   border-radius: 14px;
   padding: 0px;
-  border: 1px solid var(--borderColor);
+  border: 1px solid rgba(167, 139, 200, 0.34);
   background-color: var(--cookieIconColor);
   cursor: pointer;
-  box-shadow: var(--boxShadow);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34), 0 0 16px rgba(167, 139, 200, 0.12);
   pointer-events: auto;
   animation: silktide-fadeIn 0.3s ease-in-out forwards;
   transform: scale(0.7);
@@ -514,7 +514,7 @@
 
 #silktide-cookie-icon svg {
   fill: var(--cookieIconBackgroundColor);
-  opacity: 0.82;
+  opacity: 0.72;
 }
 
 /* --------------------------------
