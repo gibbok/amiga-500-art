@@ -20,6 +20,7 @@ const publishedArtDir = path.join(assetsDir, "art");
 const heroSourcePath = path.join(repoRoot, "tool", "hero-reference.png");
 const heroPublishedName = "hero-desk.png";
 const heroPublishedPath = path.join(assetsDir, heroPublishedName);
+const chromeDevtoolsConfigPath = path.join(websiteDir, ".well-known", "appspecific", "com.chrome.devtools.json");
 
 const styles = `
 :root {
@@ -821,10 +822,12 @@ function buildSite(): void {
   ensureDir(publishedArtDir);
   ensureDir(path.join(websiteDir, "about"));
   ensureDir(path.join(websiteDir, "art"));
+  ensureDir(path.dirname(chromeDevtoolsConfigPath));
 
   cpSync(artDir, publishedArtDir, { recursive: true });
   cpSync(heroSourcePath, heroPublishedPath);
   writeFileSync(path.join(websiteDir, ".nojekyll"), "");
+  writeFileSync(chromeDevtoolsConfigPath, "{}\n");
   writeFileSync(path.join(assetsDir, "site.css"), styles);
   writePage(path.join(websiteDir, "index.html"), renderIndexPage(artworks));
   writePage(path.join(websiteDir, "about", "index.html"), renderAboutPage());
