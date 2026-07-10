@@ -1,0 +1,13 @@
+{
+  "name": "amiga-500-art",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:site": "tsc -p tsconfig.json && node tool/dist/build-site.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.15",
+    "http-server": "^14.1.1",
+    "typescript": "^5.9.2"
+  }
+}
