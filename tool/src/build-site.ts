@@ -22,6 +22,8 @@ const publishedFontsDir = path.join(assetsDir, "fonts");
 const heroSourcePath = path.join(repoRoot, "tool", "hero-reference.png");
 const heroPublishedName = "hero-desk.png";
 const heroPublishedPath = path.join(assetsDir, heroPublishedName);
+const siteBaseUrl = "https://gibbok.github.io/amiga-500-art";
+const socialImageUrl = `${siteBaseUrl}/assets/${heroPublishedName}`;
 const chromeDevtoolsConfigPath = path.join(websiteDir, ".well-known", "appspecific", "com.chrome.devtools.json");
 
 const styles = `
@@ -565,6 +567,10 @@ function slugify(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+function artworkSlug(fileStem: string): string {
+  return fileStem.match(/\d+/)?.[0] ?? slugify(fileStem);
+}
+
 function titleize(fileStem: string): string {
   const match = fileStem.match(/(\d+)/);
   if (match) {
@@ -617,7 +623,6 @@ function renderLayout(options: {
   const stylesheetHref = relativePath(currentDir, path.join(assetsDir, "site.css"));
   const pressStartFontHref = relativePath(currentDir, path.join(publishedFontsDir, "press-start-2p.woff2"));
   const vt323FontHref = relativePath(currentDir, path.join(publishedFontsDir, "vt323.woff2"));
-  const socialImageHref = relativePath(currentDir, heroPublishedPath);
   const indexHref = relativePath(currentDir, path.join(websiteDir, "index.html"));
   const aboutHref = relativePath(currentDir, path.join(websiteDir, "about", "index.html"));
   const isAbout = options.currentPath.endsWith(path.join("about", "index.html"));
@@ -637,11 +642,15 @@ function renderLayout(options: {
     <meta property="og:title" content="${escapeHtml(options.pageTitle)}">
     <meta property="og:description" content="${escapeHtml(options.description)}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="${socialImageHref}">
+    <meta property="og:image" content="${socialImageUrl}">
+    <meta property="og:image:secure_url" content="${socialImageUrl}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1448">
+    <meta property="og:image:height" content="1086">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${escapeHtml(options.pageTitle)}">
     <meta name="twitter:description" content="${escapeHtml(options.description)}">
-    <meta name="twitter:image" content="${socialImageHref}">
+    <meta name="twitter:image" content="${socialImageUrl}">
     <link rel="preload" href="${pressStartFontHref}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="${vt323FontHref}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="${stylesheetHref}">
@@ -683,7 +692,7 @@ function buildArtworks(): Artwork[] {
 
   return imageFiles.map((fileName) => {
     const fileStem = fileName.replace(/\.png$/i, "");
-    const slug = slugify(fileStem);
+    const slug = artworkSlug(fileStem);
     const filePath = path.join(artDir, fileName);
     const { width, height } = readPngSize(filePath);
 
@@ -718,7 +727,7 @@ function renderIndexPage(artworks: Artwork[]): string {
     .join("\n");
 
   return renderLayout({
-    pageTitle: "Commodore Amiga 500 Artwork Portfolio | Deluxe Paint Gallery",
+    pageTitle: "Commodore Amiga 500 Artwork Portfolio",
     description: "Personal Commodore Amiga 500 artwork portfolio featuring 1991 Deluxe Paint, Brilliance, and Amiga BASIC artwork recovered from original Amiga images.",
     keywords: "Amiga 500 artwork, Commodore Amiga 500 artwork, Deluxe Paint gallery, Brilliance Amiga art, Amiga BASIC art, retro computer art portfolio",
     currentPath: path.join(websiteDir, "index.html"),
