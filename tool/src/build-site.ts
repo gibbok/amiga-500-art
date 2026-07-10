@@ -265,7 +265,6 @@ img {
 }
 
 .hero-copy p,
-.lede,
 .about-copy p,
 .detail-copy p {
   margin: 0;
@@ -788,7 +787,6 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
         <div class="detail-hero">
           <span class="eyebrow">Artwork Detail</span>
           <h1 class="page-title">${escapeHtml(artwork.title)}</h1>
-          <p class="lede">Original resolution ${artwork.width} x ${artwork.height}</p>
         </div>
         <section class="detail-stage">
           <div class="detail-media" style="--art-width: ${artwork.width}px;">
