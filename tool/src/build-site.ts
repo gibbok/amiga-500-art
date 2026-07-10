@@ -154,17 +154,6 @@ img {
   margin-bottom: var(--space-5);
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.95rem;
-  font-family: "Press Start 2P", monospace;
-  font-size: clamp(0.72rem, 1.5vw, 0.95rem);
-  text-transform: uppercase;
-  color: var(--text);
-  text-shadow: 0 0 18px rgba(255, 95, 170, 0.35);
-}
-
 .nav {
   display: flex;
   flex-wrap: wrap;
@@ -546,10 +535,6 @@ img {
     min-height: 360px;
   }
 
-  .hero-caption {
-    max-width: calc(100% - 2rem);
-  }
-
   .hero-title,
   .page-title {
     font-size: 1.55rem;
@@ -604,16 +589,19 @@ function relativePath(fromDir: string, toPath: string): string {
 function renderLayout(options: {
   pageTitle: string;
   description: string;
+  keywords?: string;
   bodyClass?: string;
   currentPath: string;
   content: string;
 }): string {
   const currentDir = path.dirname(options.currentPath);
   const stylesheetHref = relativePath(currentDir, path.join(assetsDir, "site.css"));
+  const socialImageHref = relativePath(currentDir, heroPublishedPath);
   const indexHref = relativePath(currentDir, path.join(websiteDir, "index.html"));
   const aboutHref = relativePath(currentDir, path.join(websiteDir, "about", "index.html"));
   const isAbout = options.currentPath.endsWith(path.join("about", "index.html"));
   const isIndex = options.currentPath.endsWith(path.join("website", "index.html"));
+  const keywords = options.keywords ?? "Amiga 500 art work, Commodore Amiga art, Amiga 500 portfolio, Deluxe Paint artwork, retro computer art";
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -622,6 +610,17 @@ function renderLayout(options: {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${escapeHtml(options.pageTitle)}</title>
     <meta name="description" content="${escapeHtml(options.description)}">
+    <meta name="keywords" content="${escapeHtml(keywords)}">
+    <meta name="author" content="GibboK">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="${escapeHtml(options.pageTitle)}">
+    <meta property="og:description" content="${escapeHtml(options.description)}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="${socialImageHref}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(options.pageTitle)}">
+    <meta name="twitter:description" content="${escapeHtml(options.description)}">
+    <meta name="twitter:image" content="${socialImageHref}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
@@ -687,7 +686,7 @@ function renderIndexPage(artworks: Artwork[]): string {
       return `<article class="portfolio-card">
   <figure>
     <div class="portfolio-media">
-      <img src="${artwork.imagePath}" alt="${escapeHtml(artwork.title)}">
+      <img src="${artwork.imagePath}" alt="${escapeHtml(`${artwork.title} - Amiga 500 artwork`)}">
     </div>
     <figcaption>
       <h3 class="card-title">${escapeHtml(artwork.title)}</h3>
@@ -699,13 +698,14 @@ function renderIndexPage(artworks: Artwork[]): string {
     .join("\n");
 
   return renderLayout({
-    pageTitle: "Amiga 500 Portfolio",
-    description: "Personal Commodore Amiga 500 portfolio website.",
+    pageTitle: "Commodore Amiga 500 Art Work Portfolio | Deluxe Paint Gallery",
+    description: "Personal Commodore Amiga 500 art work portfolio featuring 1991 Deluxe Paint, Brilliance, and Amiga BASIC artwork recovered from original Amiga images.",
+    keywords: "Amiga 500 art work, Commodore Amiga 500 artwork, Deluxe Paint gallery, Brilliance Amiga art, Amiga BASIC art, retro computer art portfolio",
     currentPath: path.join(websiteDir, "index.html"),
     content: `
       <section class="hero-shell">
         <div class="hero-visual">
-          <img src="assets/${heroPublishedName}" alt="Retro desk scene with Commodore Amiga 500 setup">
+          <img src="assets/${heroPublishedName}" alt="Retro Commodore Amiga 500 art work desk with Deluxe Paint and Amiga BASIC floppies">
         </div>
         <div class="hero-copy">
           <span class="eyebrow">Personal Portfolio</span>
@@ -742,8 +742,9 @@ function renderIndexPage(artworks: Artwork[]): string {
 
 function renderAboutPage(): string {
   return renderLayout({
-    pageTitle: "About | Amiga 500 Portfolio",
-    description: "About page for the Amiga 500 personal portfolio.",
+    pageTitle: "About The Amiga 500 Art Work | Commodore Portfolio",
+    description: "About this personal Amiga 500 art work archive created in 1991 with Deluxe Paint, Brilliance, and Amiga BASIC on a Commodore Amiga 500 Plus.",
+    keywords: "about Amiga 500 art work, Commodore Amiga 500 Plus, Deluxe Paint artwork, Brilliance artwork, Amiga BASIC post processing",
     currentPath: path.join(websiteDir, "about", "index.html"),
     content: `
       <section class="about-shell">
@@ -776,8 +777,9 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
   const nextHref = next ? relativePath(pageDir, path.join(websiteDir, next.detailPath)) : indexHref;
 
   return renderLayout({
-    pageTitle: `${artwork.title} | Amiga 500 Portfolio`,
-    description: `${artwork.title} from the Commodore Amiga 500 portfolio.`,
+    pageTitle: `${artwork.title} | Commodore Amiga 500 Art Work`,
+    description: `${artwork.title} from a personal Commodore Amiga 500 art work portfolio created with Deluxe Paint, Brilliance, and Amiga BASIC.`,
+    keywords: `${artwork.title}, Amiga 500 art work, Commodore Amiga artwork, Deluxe Paint image, Brilliance Amiga art, retro computer art`,
     currentPath: pagePath,
     content: `
       <section class="detail-shell">
@@ -788,7 +790,7 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
         </div>
         <section class="detail-stage">
           <div class="detail-media" style="--art-width: ${artwork.width}px;">
-            <img src="${imageHref}" alt="${escapeHtml(artwork.title)}" width="${artwork.width}" height="${artwork.height}">
+            <img src="${imageHref}" alt="${escapeHtml(`${artwork.title} - Commodore Amiga 500 art work`)}" width="${artwork.width}" height="${artwork.height}">
           </div>
         </section>
         <section class="detail-copy">

@@ -130,17 +130,6 @@ img {
   margin-bottom: var(--space-5);
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.95rem;
-  font-family: "Press Start 2P", monospace;
-  font-size: clamp(0.72rem, 1.5vw, 0.95rem);
-  text-transform: uppercase;
-  color: var(--text);
-  text-shadow: 0 0 18px rgba(255, 95, 170, 0.35);
-}
-
 .nav {
   display: flex;
   flex-wrap: wrap;
@@ -520,10 +509,6 @@ img {
 
   .hero-visual {
     min-height: 360px;
-  }
-
-  .hero-caption {
-    max-width: calc(100% - 2rem);
   }
 
   .hero-title,
