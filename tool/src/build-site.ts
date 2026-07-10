@@ -19,12 +19,17 @@ const assetsDir = path.join(websiteDir, "assets");
 const publishedArtDir = path.join(assetsDir, "art");
 const sourceFontsDir = path.join(repoRoot, "tool", "fonts");
 const publishedFontsDir = path.join(assetsDir, "fonts");
+const sourceStaticDir = path.join(repoRoot, "tool", "static");
+const sourceCookieBannerDir = path.join(sourceStaticDir, "cookie-banner");
+const publishedCookieBannerDir = path.join(websiteDir, "cookie-banner");
+const sourceCookiePolicyPath = path.join(sourceStaticDir, "cookie_policy.html");
 const heroSourcePath = path.join(repoRoot, "tool", "hero-reference.png");
 const heroPublishedName = "hero-desk.png";
 const heroPublishedPath = path.join(assetsDir, heroPublishedName);
 const siteBaseUrl = "https://gibbok.github.io/amiga-500-art";
 const socialImageUrl = `${siteBaseUrl}/assets/${heroPublishedName}`;
 const chromeDevtoolsConfigPath = path.join(websiteDir, ".well-known", "appspecific", "com.chrome.devtools.json");
+const googleAnalyticsId = "G-0BW9XRC2KH";
 
 const styles = readFileSync(path.join(repoRoot, "tool", "src", "site.css"), "utf8");
 
@@ -76,6 +81,65 @@ function relativePath(fromDir: string, toPath: string): string {
   return path.relative(fromDir, toPath).split(path.sep).join("/");
 }
 
+function renderAnalyticsHead(currentDir: string): string {
+  const cookieBannerCssHref = relativePath(currentDir, path.join(publishedCookieBannerDir, "silktide-consent-manager.css"));
+  const cookieBannerScriptSrc = relativePath(currentDir, path.join(publishedCookieBannerDir, "silktide-consent-manager.js"));
+  const cookiePolicyHref = relativePath(currentDir, path.join(websiteDir, "cookie_policy.html"));
+
+  return `    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+      gtag('js', new Date());
+      gtag('config', '${googleAnalyticsId}');
+    </script>
+    <link rel="stylesheet" href="${cookieBannerCssHref}">
+    <script src="${cookieBannerScriptSrc}"></script>
+    <script>
+      window.silktideCookieBannerManager.updateCookieBannerConfig({
+        cookieIcon: {
+          position: 'bottomLeft'
+        },
+        cookieTypes: [
+          {
+            id: 'necessary',
+            name: 'Necessary',
+            description: '<p>These cookies are required for the website to work and cannot be disabled.</p>',
+            required: true
+          },
+          {
+            id: 'analytics',
+            name: 'Analytics',
+            description: '<p>These cookies help us understand how visitors use the website.</p>',
+            defaultValue: false,
+            onAccept: function() {
+              gtag('consent', 'update', {
+                analytics_storage: 'granted'
+              });
+              gtag('config', '${googleAnalyticsId}');
+            },
+            onReject: function() {
+              gtag('consent', 'update', {
+                analytics_storage: 'denied'
+              });
+            }
+          }
+        ],
+        text: {
+          banner: {
+            description: '<p>We use cookies to measure website traffic and improve the site. Read our <a href="${cookiePolicyHref}">Cookie Policy</a>.</p>'
+          }
+        }
+      });
+    </script>`;
+}
+
 function renderLayout(options: {
   pageTitle: string;
   description: string;
@@ -119,6 +183,7 @@ function renderLayout(options: {
     <link rel="preload" href="${pressStartFontHref}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="${vt323FontHref}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="${stylesheetHref}">
+${renderAnalyticsHead(currentDir)}
   </head>
   <body${options.bodyClass ? ` class="${escapeHtml(options.bodyClass)}"` : ""}>
     <div class="shell">
@@ -327,16 +392,25 @@ function buildSite(): void {
   if (!existsSync(sourceFontsDir)) {
     throw new Error("Expected tool/fonts with self-hosted font files.");
   }
+  if (!existsSync(sourceCookieBannerDir)) {
+    throw new Error("Expected tool/static/cookie-banner with Silktide consent manager files.");
+  }
+  if (!existsSync(sourceCookiePolicyPath)) {
+    throw new Error("Expected tool/static/cookie_policy.html.");
+  }
 
   rmSync(websiteDir, { recursive: true, force: true });
   ensureDir(publishedArtDir);
   ensureDir(publishedFontsDir);
+  ensureDir(publishedCookieBannerDir);
   ensureDir(path.join(websiteDir, "about"));
   ensureDir(path.join(websiteDir, "art"));
   ensureDir(path.dirname(chromeDevtoolsConfigPath));
 
   cpSync(artDir, publishedArtDir, { recursive: true });
   cpSync(sourceFontsDir, publishedFontsDir, { recursive: true });
+  cpSync(sourceCookieBannerDir, publishedCookieBannerDir, { recursive: true });
+  cpSync(sourceCookiePolicyPath, path.join(websiteDir, "cookie_policy.html"));
   cpSync(heroSourcePath, heroPublishedPath);
   writeFileSync(path.join(websiteDir, ".nojekyll"), "");
   writeFileSync(chromeDevtoolsConfigPath, "{}\n");

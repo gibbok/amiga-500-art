@@ -23,6 +23,58 @@
     <link rel="preload" href="assets/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/vt323.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0BW9XRC2KH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+      gtag('js', new Date());
+      gtag('config', 'G-0BW9XRC2KH');
+    </script>
+    <link rel="stylesheet" href="cookie-banner/silktide-consent-manager.css">
+    <script src="cookie-banner/silktide-consent-manager.js"></script>
+    <script>
+      window.silktideCookieBannerManager.updateCookieBannerConfig({
+        cookieIcon: {
+          position: 'bottomLeft'
+        },
+        cookieTypes: [
+          {
+            id: 'necessary',
+            name: 'Necessary',
+            description: '<p>These cookies are required for the website to work and cannot be disabled.</p>',
+            required: true
+          },
+          {
+            id: 'analytics',
+            name: 'Analytics',
+            description: '<p>These cookies help us understand how visitors use the website.</p>',
+            defaultValue: false,
+            onAccept: function() {
+              gtag('consent', 'update', {
+                analytics_storage: 'granted'
+              });
+              gtag('config', 'G-0BW9XRC2KH');
+            },
+            onReject: function() {
+              gtag('consent', 'update', {
+                analytics_storage: 'denied'
+              });
+            }
+          }
+        ],
+        text: {
+          banner: {
+            description: '<p>We use cookies to measure website traffic and improve the site. Read our <a href="cookie_policy.html">Cookie Policy</a>.</p>'
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <div class="shell">
