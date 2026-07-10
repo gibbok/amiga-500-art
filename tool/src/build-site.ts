@@ -318,6 +318,26 @@ img {
   gap: 1rem;
 }
 
+.hero-actions {
+  margin-top: var(--space-3);
+}
+
+.detail-nav {
+  margin-top: var(--space-4);
+}
+
+.about-hero .eyebrow {
+  margin-bottom: var(--space-4);
+}
+
+.detail-hero .eyebrow {
+  margin-bottom: var(--space-4);
+}
+
+.about-copy .button-link {
+  margin-top: var(--space-4);
+}
+
 .button-link {
   display: inline-flex;
   align-items: center;
@@ -806,7 +826,6 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
         <section class="detail-copy">
           <h2 class="detail-title">Archive Entry</h2>
           <div class="detail-meta-line">
-            <span>Original size ${artwork.width} x ${artwork.height}</span>
             <span>Sequence ${String(currentIndex + 1).padStart(3, "0")}</span>
           </div>
           <div class="detail-nav">

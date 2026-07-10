@@ -294,6 +294,26 @@ img {
   gap: 1rem;
 }
 
+.hero-actions {
+  margin-top: var(--space-3);
+}
+
+.detail-nav {
+  margin-top: var(--space-4);
+}
+
+.about-hero .eyebrow {
+  margin-bottom: var(--space-4);
+}
+
+.detail-hero .eyebrow {
+  margin-bottom: var(--space-4);
+}
+
+.about-copy .button-link {
+  margin-top: var(--space-4);
+}
+
 .button-link {
   display: inline-flex;
   align-items: center;
