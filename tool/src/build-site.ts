@@ -468,6 +468,7 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  margin-top: var(--space-3);
   color: var(--cyan);
   font-family: "Press Start 2P", monospace;
   font-size: 0.62rem;
