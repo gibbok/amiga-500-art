@@ -761,12 +761,12 @@ function renderAboutPage(): string {
         <div class="about-hero">
           <span class="eyebrow">About</span>
           <h1 class="page-title">Portfolio Notes</h1>
-          <p class="lede">This page is reserved for your own biography, process, hardware notes, and context around the work.</p>
         </div>
         <section class="about-copy" aria-label="About content">
           <h2 class="detail-title">What To Add Later</h2>
-          <p>Introduce yourself, explain your connection to the Amiga 500, and describe the creative methods or tools behind the work shown here.</p>
-          <p>You can also use this page to talk about the machine, your setup, favorite software, or how this portfolio connects to your wider practice.</p>
+          <p>These are some of the artworks I created in 1991 on my Amiga 500 Plus. I mainly used Deluxe Paint and Brilliance, with additional post-processing in Amiga BASIC.</p>
+          <p>At the time, my Amiga had two floppy drives and 2 MB of RAM.</p>
+          <p>The images in this portfolio were recovered from VHS backups recorded from my Amiga. This is why some of them appear slightly blurred.</p>
           <div>
             <a class="button-link" href="../index.html">Back To Portfolio</a>
           </div>
