@@ -44,6 +44,7 @@ const styles = `
   --space-5: 2rem;
   --space-6: 3rem;
   --space-7: 4rem;
+  --portfolio-media-height: clamp(190px, 18vw, 250px);
 }
 
 * {
@@ -406,28 +407,23 @@ img {
   height: 100%;
 }
 
-.portfolio-card:nth-child(3n + 2) {
-  transform: translateY(1rem);
-}
-
-.portfolio-card:nth-child(4n) {
-  transform: translateY(-0.7rem);
-}
-
 .portfolio-card figure {
   height: 100%;
   margin: 0;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: var(--portfolio-media-height) 1fr;
 }
 
 .portfolio-media {
-  aspect-ratio: 5 / 4;
+  position: relative;
+  height: var(--portfolio-media-height);
   background: #070714;
   overflow: hidden;
 }
 
 .portfolio-media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -538,10 +534,6 @@ img {
     padding: var(--space-4);
   }
 
-  .portfolio-card:nth-child(3n + 2),
-  .portfolio-card:nth-child(4n) {
-    transform: none;
-  }
 }
 
 @media (max-width: 560px) {
@@ -652,7 +644,7 @@ function renderLayout(options: {
       </header>
       ${options.content}
       <footer class="footer">
-        Personal Commodore Amiga 500 Art Portfolio..
+        Personal Commodore Amiga 500 Art Portfolio by GibboK
       </footer>
     </div>
   </body>
