@@ -2,6 +2,8 @@
 
 Portfolio website for Commodore Amiga 500 artwork.
 
+Site: <gibbok.github.io/amiga-500-art>
+
 ## Local Development
 
 Install dependencies:
