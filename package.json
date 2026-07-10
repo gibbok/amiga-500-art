@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build:site": "tsc -p tsconfig.json && node tool/dist/build-site.js"
+    "build:site": "tsc -p tsconfig.json && node tool/dist/build-site.js",
+    "serve:site": "npm run build:site && http-server website"
   },
   "devDependencies": {
     "@types/node": "^24.0.15",

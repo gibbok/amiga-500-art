@@ -346,6 +346,12 @@ img {
   padding: var(--space-3);
   background:
     linear-gradient(180deg, rgba(17, 36, 67, 0.95), rgba(8, 17, 31, 0.95));
+  display: flex;
+  justify-content: center;
+}
+
+.detail-media {
+  width: min(100%, var(--art-width, 720px));
 }
 
 .detail-stage img {

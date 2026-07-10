@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 type Artwork = {
@@ -6,6 +6,8 @@ type Artwork = {
   fileStem: string;
   slug: string;
   title: string;
+  width: number;
+  height: number;
   imagePath: string;
   detailPath: string;
 };
@@ -365,6 +367,12 @@ img {
   padding: var(--space-3);
   background:
     linear-gradient(180deg, rgba(17, 36, 67, 0.95), rgba(8, 17, 31, 0.95));
+  display: flex;
+  justify-content: center;
+}
+
+.detail-media {
+  width: min(100%, var(--art-width, 720px));
 }
 
 .detail-stage img {
@@ -462,6 +470,20 @@ function ensureDir(dirPath: string): void {
   mkdirSync(dirPath, { recursive: true });
 }
 
+function readPngSize(filePath: string): { width: number; height: number } {
+  const buffer = readFileSync(filePath);
+  const pngSignature = "89504e470d0a1a0a";
+
+  if (buffer.subarray(0, 8).toString("hex") !== pngSignature) {
+    throw new Error(`Unsupported image format for ${filePath}. Expected PNG.`);
+  }
+
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20)
+  };
+}
+
 function writePage(targetPath: string, html: string): void {
   ensureDir(path.dirname(targetPath));
   writeFileSync(targetPath, html);
@@ -539,11 +561,16 @@ function buildArtworks(): Artwork[] {
   return imageFiles.map((fileName) => {
     const fileStem = fileName.replace(/\.png$/i, "");
     const slug = slugify(fileStem);
+    const filePath = path.join(artDir, fileName);
+    const { width, height } = readPngSize(filePath);
+
     return {
       fileName,
       fileStem,
       slug,
       title: titleize(fileStem),
+      width,
+      height,
       imagePath: `assets/art/${fileName}`,
       detailPath: `art/${slug}/index.html`
     };
@@ -558,7 +585,6 @@ function renderIndexPage(artworks: Artwork[]): string {
     <img src="${artwork.imagePath}" alt="${escapeHtml(artwork.title)}">
     <figcaption>
       <h3 class="card-title">${escapeHtml(artwork.title)}</h3>
-      <div class="card-meta">${escapeHtml(artwork.fileName)}</div>
       <a class="button-link card-link" href="${artwork.detailPath}">Open Artwork</a>
     </figcaption>
   </figure>
@@ -659,15 +685,16 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
         <div class="panel">
           <span class="eyebrow">Artwork Detail</span>
           <h1 class="page-title">${escapeHtml(artwork.title)}</h1>
-          <p class="lede">${escapeHtml(artwork.fileName)}</p>
+          <p class="lede">Original resolution ${artwork.width} x ${artwork.height}</p>
         </div>
         <section class="detail-stage">
-          <img src="${imageHref}" alt="${escapeHtml(artwork.title)}">
+          <div class="detail-media" style="--art-width: ${artwork.width}px;">
+            <img src="${imageHref}" alt="${escapeHtml(artwork.title)}" width="${artwork.width}" height="${artwork.height}">
+          </div>
         </section>
         <section class="detail-copy">
           <h2 class="detail-title">Archive Entry</h2>
-          <div class="detail-meta">Source file: ${escapeHtml(artwork.fileName)}</div>
-          <p>This dedicated page keeps the artwork large, uncluttered, and easy to browse as part of the collection.</p>
+          <p>This dedicated page keeps the artwork at its original maximum display size, without enlarging it past the source file resolution.</p>
           <div class="detail-nav">
             <a class="button-link" href="${indexHref}">Back To Gallery</a>
             <a class="button-link alt" href="${previousHref}">${previous ? "Previous Artwork" : "Gallery Start"}</a>
