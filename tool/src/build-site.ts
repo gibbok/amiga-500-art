@@ -654,7 +654,7 @@ function renderLayout(options: {
       <header class="topbar">
         <a class="brand" href="${indexHref}">
           <span class="brand-mark" aria-hidden="true"></span>
-          <span>Amiga 500 Portfolio</span>
+          <span>Amiga 500 Art Portfolio</span>
         </a>
         <nav class="nav" aria-label="Primary">
           <a href="${indexHref}"${isIndex ? ` aria-current="page"` : ""}>Portfolio</a>
@@ -663,7 +663,7 @@ function renderLayout(options: {
       </header>
       ${options.content}
       <footer class="footer">
-        Personal Commodore Amiga 500 portfolio. Static site generated from the repository archive.
+        Personal Commodore Amiga 500 Art Portfolio..
       </footer>
     </div>
   </body>
