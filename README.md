@@ -1,6 +1,6 @@
 # Amiga 500 Art Portfolio
 
-Static portfolio website for Commodore Amiga 500 artwork.
+Portfolio website for Commodore Amiga 500 artwork.
 
 ## Local Development
 
@@ -24,7 +24,7 @@ make serve
 
 ## Publish On GitHub Pages
 
-This repository includes a free GitHub Pages deployment workflow at `.github/workflows/deploy-pages.yml`.
+This repository includes GitHub Pages deployment workflow at `.github/workflows/deploy-pages.yml`.
 
 ### One-time GitHub setup
 
@@ -53,9 +53,3 @@ You can also deploy with a click:
 5. Choose the `main` branch and run it.
 
 The published URL appears in the completed workflow summary and in `Settings` > `Pages`.
-
-For a reminder in the terminal:
-
-```sh
-make deploy-help
-```
