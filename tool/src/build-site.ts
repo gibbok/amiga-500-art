@@ -52,6 +52,7 @@ const styles = `
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg-bottom);
 }
 
 body {
@@ -64,28 +65,25 @@ body {
     radial-gradient(circle at 15% 12%, rgba(255, 95, 170, 0.22), transparent 24%),
     radial-gradient(circle at 82% 20%, rgba(92, 232, 255, 0.18), transparent 22%),
     linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 42%, var(--bg-bottom) 100%);
+  background-attachment: scroll;
+  background-color: var(--bg-bottom);
   position: relative;
   overflow-x: hidden;
 }
 
-body::before,
-body::after {
+body::before {
   content: "";
-  position: fixed;
+  position: absolute;
+  min-height: 100%;
+  height: max(100%, 100vh);
   inset: 0;
   pointer-events: none;
-}
-
-body::before {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 100%),
     linear-gradient(90deg, rgba(92, 232, 255, 0.04) 0 1px, transparent 1px 100%);
   background-size: 100% 4px, 26px 26px;
   opacity: 0.12;
-}
-
-body::after {
-  background: linear-gradient(180deg, transparent 0%, rgba(4, 4, 13, 0.5) 100%);
+  z-index: 0;
 }
 
 a {
@@ -104,6 +102,7 @@ img {
   margin: 0 auto;
   padding: 1.25rem 0 var(--space-7);
   position: relative;
+  z-index: 1;
 }
 
 .shell::before {
@@ -163,13 +162,6 @@ img {
   text-transform: uppercase;
   color: var(--text);
   text-shadow: 0 0 18px rgba(255, 95, 170, 0.35);
-}
-
-.brand-mark {
-  width: 1.15rem;
-  height: 1.15rem;
-  background: linear-gradient(90deg, var(--pink) 0 50%, var(--cyan) 50% 100%);
-  clip-path: polygon(50% 0%, 100% 45%, 82% 100%, 18% 100%, 0% 45%);
 }
 
 .nav {
@@ -277,7 +269,6 @@ img {
 .detail-copy,
 .about-copy,
 .identity-panel,
-.portfolio-note,
 .detail-stage {
   background: linear-gradient(180deg, rgba(10, 12, 28, 0.84), rgba(7, 8, 19, 0.58));
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -312,9 +303,7 @@ img {
 .hero-copy p,
 .lede,
 .about-copy p,
-.detail-copy p,
-.portfolio-intro p,
-.portfolio-note p {
+.detail-copy p {
   margin: 0;
   color: var(--muted);
   font-size: clamp(1.2rem, 1.8vw, 1.58rem);
@@ -390,30 +379,23 @@ img {
 }
 
 .portfolio-head {
-  display: grid;
-  grid-template-columns: minmax(0, 0.94fr) minmax(260px, 0.8fr);
-  gap: var(--space-5);
-  align-items: end;
   margin-bottom: var(--space-5);
 }
 
-.portfolio-intro h2,
+.portfolio-head h2,
 .detail-title {
-  margin: 0 0 0.9rem;
+  margin: 0;
   font-family: "Press Start 2P", monospace;
   font-size: clamp(1.02rem, 2vw, 1.42rem);
   line-height: 1.5;
   text-transform: uppercase;
 }
 
-.portfolio-note {
-  padding: 1.2rem;
-}
-
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.3rem;
+  align-items: start;
 }
 
 .portfolio-card {
@@ -435,9 +417,15 @@ img {
   margin: 0;
 }
 
-.portfolio-card img {
-  width: 100%;
+.portfolio-media {
   aspect-ratio: 5 / 4;
+  background: #070714;
+  overflow: hidden;
+}
+
+.portfolio-media img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -510,8 +498,7 @@ img {
 }
 
 @media (max-width: 1120px) {
-  .hero-shell,
-  .portfolio-head {
+  .hero-shell {
     grid-template-columns: 1fr;
   }
 
@@ -540,8 +527,7 @@ img {
   .detail-hero,
   .about-hero,
   .detail-copy,
-  .about-copy,
-  .portfolio-note {
+  .about-copy {
     padding: var(--space-4);
   }
 
@@ -653,7 +639,6 @@ function renderLayout(options: {
     <div class="shell">
       <header class="topbar">
         <a class="brand" href="${indexHref}">
-          <span class="brand-mark" aria-hidden="true"></span>
           <span>Amiga 500 Art Portfolio</span>
         </a>
         <nav class="nav" aria-label="Primary">
@@ -712,7 +697,9 @@ function renderIndexPage(artworks: Artwork[]): string {
     .map((artwork, index) => {
       return `<article class="portfolio-card">
   <figure>
-    <img src="${artwork.imagePath}" alt="${escapeHtml(artwork.title)}">
+    <div class="portfolio-media">
+      <img src="${artwork.imagePath}" alt="${escapeHtml(artwork.title)}">
+    </div>
     <figcaption>
       <span class="card-index">Entry ${String(index + 1).padStart(3, "0")}</span>
       <h3 class="card-title">${escapeHtml(artwork.title)}</h3>
@@ -739,8 +726,8 @@ function renderIndexPage(artworks: Artwork[]): string {
         <div class="hero-copy">
           <span class="eyebrow">Personal Portfolio</span>
           <div class="hero-frame">
-            <h1 class="hero-title">Commodore Amiga 500 Work, Framed Like A Real Desk Shrine</h1>
-            <p>This site is a personal portfolio for my Amiga 500 creative work. The mood is intentionally physical and nostalgic: hardware glow, Deluxe Paint, Brilliance, floppy disks, and the feeling of a machine that still matters.</p>
+            <h1 class="hero-title">Commodore Amiga 500 Work</h1>
+            <p>This site is a personal portfolio for my Amiga 500 creative work.</p>
             <div class="hero-actions">
               <a class="button-link" href="#portfolio">Browse Work</a>
               <a class="button-link alt" href="about/">About Me</a>
@@ -759,13 +746,7 @@ function renderIndexPage(artworks: Artwork[]): string {
 
       <section id="portfolio" class="portfolio-shell" aria-labelledby="portfolio-title">
         <div class="portfolio-head">
-          <div class="portfolio-intro">
-            <h2 id="portfolio-title">Portfolio Archive</h2>
-            <p>The grid below is the body of the work. The homepage now acts as an introduction to the person and the machine behind it, with the archive sitting underneath as the collection itself.</p>
-          </div>
-          <div class="portfolio-note">
-            <p><strong>${artworks.length}</strong> image entries are published from the current repository set, each with its own detail page at original maximum display size.</p>
-          </div>
+          <h2 id="portfolio-title">Portfolio Archive</h2>
         </div>
         <div class="portfolio-grid">
           ${cards}

@@ -28,6 +28,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg-bottom);
 }
 
 body {
@@ -40,28 +41,25 @@ body {
     radial-gradient(circle at 15% 12%, rgba(255, 95, 170, 0.22), transparent 24%),
     radial-gradient(circle at 82% 20%, rgba(92, 232, 255, 0.18), transparent 22%),
     linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 42%, var(--bg-bottom) 100%);
+  background-attachment: scroll;
+  background-color: var(--bg-bottom);
   position: relative;
   overflow-x: hidden;
 }
 
-body::before,
-body::after {
+body::before {
   content: "";
-  position: fixed;
+  position: absolute;
+  min-height: 100%;
+  height: max(100%, 100vh);
   inset: 0;
   pointer-events: none;
-}
-
-body::before {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 100%),
     linear-gradient(90deg, rgba(92, 232, 255, 0.04) 0 1px, transparent 1px 100%);
   background-size: 100% 4px, 26px 26px;
   opacity: 0.12;
-}
-
-body::after {
-  background: linear-gradient(180deg, transparent 0%, rgba(4, 4, 13, 0.5) 100%);
+  z-index: 0;
 }
 
 a {
@@ -80,6 +78,7 @@ img {
   margin: 0 auto;
   padding: 1.25rem 0 var(--space-7);
   position: relative;
+  z-index: 1;
 }
 
 .shell::before {
@@ -139,13 +138,6 @@ img {
   text-transform: uppercase;
   color: var(--text);
   text-shadow: 0 0 18px rgba(255, 95, 170, 0.35);
-}
-
-.brand-mark {
-  width: 1.15rem;
-  height: 1.15rem;
-  background: linear-gradient(90deg, var(--pink) 0 50%, var(--cyan) 50% 100%);
-  clip-path: polygon(50% 0%, 100% 45%, 82% 100%, 18% 100%, 0% 45%);
 }
 
 .nav {
@@ -253,7 +245,6 @@ img {
 .detail-copy,
 .about-copy,
 .identity-panel,
-.portfolio-note,
 .detail-stage {
   background: linear-gradient(180deg, rgba(10, 12, 28, 0.84), rgba(7, 8, 19, 0.58));
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -288,9 +279,7 @@ img {
 .hero-copy p,
 .lede,
 .about-copy p,
-.detail-copy p,
-.portfolio-intro p,
-.portfolio-note p {
+.detail-copy p {
   margin: 0;
   color: var(--muted);
   font-size: clamp(1.2rem, 1.8vw, 1.58rem);
@@ -366,30 +355,23 @@ img {
 }
 
 .portfolio-head {
-  display: grid;
-  grid-template-columns: minmax(0, 0.94fr) minmax(260px, 0.8fr);
-  gap: var(--space-5);
-  align-items: end;
   margin-bottom: var(--space-5);
 }
 
-.portfolio-intro h2,
+.portfolio-head h2,
 .detail-title {
-  margin: 0 0 0.9rem;
+  margin: 0;
   font-family: "Press Start 2P", monospace;
   font-size: clamp(1.02rem, 2vw, 1.42rem);
   line-height: 1.5;
   text-transform: uppercase;
 }
 
-.portfolio-note {
-  padding: 1.2rem;
-}
-
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.3rem;
+  align-items: start;
 }
 
 .portfolio-card {
@@ -411,9 +393,15 @@ img {
   margin: 0;
 }
 
-.portfolio-card img {
-  width: 100%;
+.portfolio-media {
   aspect-ratio: 5 / 4;
+  background: #070714;
+  overflow: hidden;
+}
+
+.portfolio-media img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -486,8 +474,7 @@ img {
 }
 
 @media (max-width: 1120px) {
-  .hero-shell,
-  .portfolio-head {
+  .hero-shell {
     grid-template-columns: 1fr;
   }
 
@@ -516,8 +503,7 @@ img {
   .detail-hero,
   .about-hero,
   .detail-copy,
-  .about-copy,
-  .portfolio-note {
+  .about-copy {
     padding: var(--space-4);
   }
 
