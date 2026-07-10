@@ -2,7 +2,7 @@
 
 Portfolio website for Commodore Amiga 500 artwork.
 
-Site: <gibbok.github.io/amiga-500-art>
+Site: [gibbok.github.io/amiga-500-art](https://gibbok.github.io/amiga-500-art/)
 
 ## Local Development
 
