@@ -20,23 +20,19 @@ const publishedArtDir = path.join(assetsDir, "art");
 
 const styles = `
 :root {
-  --bg: #08111f;
-  --bg-deep: #050914;
-  --panel: rgba(10, 22, 43, 0.92);
-  --panel-strong: rgba(15, 31, 56, 0.98);
-  --line: #65f4ff;
-  --line-soft: rgba(101, 244, 255, 0.32);
-  --accent: #ff4db8;
-  --accent-2: #ffe45c;
-  --text: #eff7ff;
-  --muted: #9dc2d9;
-  --shadow: rgba(0, 0, 0, 0.38);
-  --hero-glow: rgba(255, 77, 184, 0.18);
-  --max-width: 1160px;
-  --radius: 18px;
-  --radius-small: 10px;
-  --border-thick: 4px;
-  --border-thin: 2px;
+  --bg-1: #060312;
+  --bg-2: #0f1030;
+  --bg-3: #1b0b24;
+  --surface: rgba(8, 10, 26, 0.72);
+  --surface-strong: rgba(10, 12, 34, 0.9);
+  --line: rgba(87, 246, 255, 0.82);
+  --line-soft: rgba(87, 246, 255, 0.2);
+  --pink: #ff5fb9;
+  --blue: #59d9ff;
+  --gold: #ffc76a;
+  --text: #f5f5ff;
+  --muted: #b8c0ff;
+  --max-width: 1320px;
   --space-1: 0.4rem;
   --space-2: 0.75rem;
   --space-3: 1rem;
@@ -44,6 +40,7 @@ const styles = `
   --space-5: 2rem;
   --space-6: 3rem;
   --space-7: 4rem;
+  --shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -58,32 +55,37 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
-  background:
-    radial-gradient(circle at top, rgba(71, 140, 255, 0.24), transparent 28%),
-    radial-gradient(circle at 80% 20%, rgba(255, 77, 184, 0.16), transparent 24%),
-    linear-gradient(180deg, #12316f 0%, var(--bg) 38%, var(--bg-deep) 100%);
   font-family: "VT323", "Courier New", monospace;
   letter-spacing: 0.03em;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 95, 185, 0.34), transparent 24%),
+    radial-gradient(circle at 82% 22%, rgba(89, 217, 255, 0.18), transparent 22%),
+    radial-gradient(circle at 50% 78%, rgba(180, 58, 255, 0.18), transparent 32%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 42%, #04030b 100%);
   position: relative;
+  overflow-x: hidden;
 }
 
-body::before {
+body::before,
+body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
+}
+
+body::before {
   background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.05) 0,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-    linear-gradient(90deg, rgba(101, 244, 255, 0.04) 1px, transparent 1px);
-  background-size: 100% 4px, 24px 24px;
-  opacity: 0.26;
-  z-index: -1;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 100%),
+    linear-gradient(90deg, rgba(89, 217, 255, 0.05) 0 1px, transparent 1px 100%);
+  background-size: 100% 4px, 28px 28px;
+  opacity: 0.12;
+}
+
+body::after {
+  background:
+    radial-gradient(circle at 50% 100%, rgba(130, 78, 255, 0.35), transparent 24%),
+    linear-gradient(180deg, transparent 0%, rgba(4, 2, 18, 0.46) 100%);
 }
 
 a {
@@ -100,42 +102,50 @@ img {
 .shell {
   width: min(calc(100% - 2rem), var(--max-width));
   margin: 0 auto;
-  padding: var(--space-5) 0 var(--space-7);
-}
-
-.masthead,
-.panel,
-.gallery-card,
-.detail-stage,
-.about-copy,
-.stat-chip {
-  border: var(--border-thin) solid var(--line);
-  border-radius: var(--radius);
-  background: var(--panel);
-  box-shadow:
-    0 0 0 3px rgba(6, 14, 31, 0.8),
-    0 16px 40px var(--shadow),
-    0 0 28px var(--hero-glow);
+  padding: 1.4rem 0 var(--space-7);
   position: relative;
 }
 
-.masthead::after,
-.panel::after,
-.gallery-card::after,
-.detail-stage::after,
-.about-copy::after,
-.stat-chip::after {
+.shell::before {
   content: "";
   position: absolute;
-  inset: 8px;
-  border: 1px solid var(--line-soft);
-  border-radius: calc(var(--radius) - 8px);
-  pointer-events: none;
+  left: 52%;
+  top: 8.2rem;
+  width: min(50vw, 720px);
+  height: min(34vw, 360px);
+  transform: translateX(-8%);
+  background:
+    linear-gradient(180deg, rgba(255, 95, 185, 0.85), rgba(255, 95, 185, 0.12) 3px, transparent 3px),
+    linear-gradient(90deg, rgba(89, 217, 255, 0.36) 1px, transparent 1px);
+  background-size: 100% 100%, 28px 18px;
+  clip-path: polygon(0 100%, 100% 100%, 88% 42%, 72% 58%, 57% 40%, 42% 61%, 24% 45%, 8% 64%);
+  opacity: 0.5;
+  filter: drop-shadow(0 0 18px rgba(255, 95, 185, 0.35));
+  z-index: 0;
 }
 
-.masthead {
-  padding: var(--space-5);
-  overflow: hidden;
+.shell::after {
+  content: "";
+  position: absolute;
+  top: 2rem;
+  left: 25%;
+  width: 240px;
+  height: 240px;
+  border: 5px solid rgba(255, 95, 185, 0.72);
+  transform: rotate(45deg);
+  opacity: 0.5;
+  filter: drop-shadow(0 0 20px rgba(255, 95, 185, 0.35));
+  z-index: 0;
+}
+
+.topbar,
+.feature-stage,
+.detail-shell,
+.about-shell,
+.gallery-shell,
+.footer {
+  position: relative;
+  z-index: 1;
 }
 
 .topbar {
@@ -144,94 +154,304 @@ img {
   justify-content: space-between;
   gap: var(--space-3);
   margin-bottom: var(--space-5);
+  padding: 0.8rem 0;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.9rem;
   font-family: "Press Start 2P", monospace;
-  font-size: clamp(0.72rem, 1.7vw, 1rem);
-  line-height: 1.6;
+  font-size: clamp(0.72rem, 1.5vw, 0.95rem);
   text-transform: uppercase;
-  color: var(--accent-2);
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  color: var(--text);
+  text-shadow: 0 0 16px rgba(255, 95, 185, 0.42);
 }
 
 .brand-mark {
-  width: 1.05rem;
-  height: 1.05rem;
-  background:
-    linear-gradient(90deg, var(--line) 0 50%, var(--accent) 50% 100%);
-  box-shadow: 0 0 0 2px #02111f;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: linear-gradient(90deg, var(--pink) 0 50%, var(--blue) 50% 100%);
+  clip-path: polygon(50% 0%, 100% 45%, 80% 100%, 20% 100%, 0% 45%);
+  box-shadow: 0 0 16px rgba(255, 95, 185, 0.52);
 }
 
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: 1rem;
 }
 
-.nav a,
-.button-link {
-  padding: 0.65rem 1rem;
-  border: var(--border-thin) solid var(--line);
-  border-radius: 999px;
+.nav a {
+  padding: 0.65rem 0;
   font-family: "Press Start 2P", monospace;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  background: rgba(12, 25, 45, 0.92);
-  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.32);
-  transition: transform 120ms ease, background 120ms ease, color 120ms ease;
+  color: var(--blue);
+  border-bottom: 3px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
 }
 
 .nav a:hover,
-.button-link:hover,
 .nav a:focus-visible,
-.button-link:focus-visible {
-  transform: translateY(-2px);
-  background: var(--accent);
-  color: #fff9fd;
+.nav a[aria-current="page"] {
+  color: var(--pink);
+  border-color: var(--pink);
   outline: none;
 }
 
-.hero {
+.feature-stage {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
   gap: var(--space-5);
-  align-items: center;
+  align-items: stretch;
+  min-height: 680px;
+}
+
+.showcase-left {
+  position: relative;
+  min-height: 640px;
+  padding: 1rem 0 0 1rem;
+}
+
+.showcase-desk {
+  position: absolute;
+  inset: 3.5rem 5rem 2.5rem 0;
+  border-radius: 38px;
+  background:
+    radial-gradient(circle at 14% 34%, rgba(255, 144, 164, 0.75), transparent 17%),
+    radial-gradient(circle at 58% 14%, rgba(255, 86, 175, 0.5), transparent 19%),
+    linear-gradient(180deg, rgba(32, 12, 30, 0.55) 0%, rgba(10, 9, 28, 0.22) 34%, rgba(9, 5, 18, 0) 66%),
+    linear-gradient(180deg, rgba(17, 9, 15, 0.1) 0%, rgba(65, 23, 13, 0.26) 72%, rgba(59, 27, 15, 0.85) 100%);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.showcase-desk::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 34%;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(37, 16, 10, 0.28) 12%, rgba(76, 34, 15, 0.95) 100%);
+}
+
+.poster-stack {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.poster-card {
+  width: 170px;
+  aspect-ratio: 0.72;
+  padding: 0.75rem;
+  border: 2px solid rgba(255, 95, 185, 0.4);
+  background: rgba(11, 8, 17, 0.72);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.38);
+  transform: rotate(-5deg);
+}
+
+.poster-card.alt {
+  margin-left: 3rem;
+  transform: rotate(2deg);
+}
+
+.poster-card strong,
+.poster-card span {
+  display: block;
+}
+
+.poster-card strong {
+  font-family: "Press Start 2P", monospace;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #ff7d6f;
+}
+
+.poster-card span {
+  margin-top: 1rem;
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.monitor {
+  position: absolute;
+  left: 18%;
+  top: 12%;
+  width: min(31vw, 455px);
+  aspect-ratio: 1 / 0.84;
+  border-radius: 22px;
+  padding: 1.15rem;
+  background: linear-gradient(145deg, #d4beb2 0%, #8f7770 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.16),
+    0 30px 60px rgba(0, 0, 0, 0.48);
+}
+
+.monitor-screen {
+  height: 100%;
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: linear-gradient(180deg, #201559 0%, #0f113f 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.14),
+    inset 0 0 32px rgba(0, 0, 0, 0.52);
+}
+
+.monitor-ui {
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background:
+    radial-gradient(circle at 56% 42%, rgba(100, 210, 255, 0.88), rgba(54, 48, 192, 0) 18%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0 10%, transparent 10%),
+    linear-gradient(135deg, rgba(255, 184, 90, 0.26), rgba(145, 42, 220, 0.18)),
+    linear-gradient(180deg, #2e39b5 0%, #331363 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.monitor-ui::before {
+  content: "";
+  position: absolute;
+  inset: 18% 18% 12% 18%;
+  background:
+    radial-gradient(circle at 52% 35%, rgba(255, 233, 146, 0.5), transparent 18%),
+    conic-gradient(from 0deg, #5fd9ff, #5679ff, #ff75c5, #5fd9ff);
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+.monitor-ui::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8%;
+  height: 28%;
+  background:
+    linear-gradient(135deg, rgba(255, 166, 89, 0.95) 25%, transparent 25% 50%, rgba(255, 166, 89, 0.95) 50% 75%, transparent 75%),
+    linear-gradient(225deg, rgba(102, 75, 255, 0.95) 25%, transparent 25% 50%, rgba(102, 75, 255, 0.95) 50% 75%, transparent 75%);
+  background-size: 54px 54px;
+  opacity: 0.75;
+}
+
+.keyboard {
+  position: absolute;
+  left: 10%;
+  right: 12%;
+  bottom: 5%;
+  height: 210px;
+  border-radius: 24px 24px 34px 34px;
+  background: linear-gradient(180deg, #dcc7bd 0%, #aa8c7c 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 28px 48px rgba(0, 0, 0, 0.42);
+  overflow: hidden;
+}
+
+.keyboard::before {
+  content: "";
+  position: absolute;
+  left: 1.4rem;
+  right: 1.4rem;
+  top: 1.1rem;
+  height: 52px;
+  background: repeating-linear-gradient(90deg, rgba(113, 90, 80, 0.3) 0 2px, transparent 2px 7px);
+  opacity: 0.7;
+}
+
+.keyboard::after {
+  content: "";
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  bottom: 2rem;
+  height: 72px;
+  background: repeating-linear-gradient(90deg, #f8ebdc 0 22px, #b09180 22px 25px);
+  border-radius: 10px;
+  box-shadow: 0 -36px 0 -18px rgba(250, 238, 224, 0.9);
+}
+
+.media-pile {
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  display: grid;
+  gap: 1rem;
+  transform: rotate(-10deg);
+}
+
+.media-card {
+  width: 230px;
+  padding: 1rem;
+  background: rgba(10, 10, 26, 0.86);
+  border: 2px solid rgba(255, 95, 185, 0.36);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.34);
+}
+
+.media-card strong {
+  display: block;
+  font-family: "Press Start 2P", monospace;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: #ff6449;
+}
+
+.media-card span {
+  display: block;
+  margin-top: 0.7rem;
+  font-size: 1.6rem;
+  color: var(--gold);
+}
+
+.showcase-right {
+  display: grid;
+  align-content: start;
+  gap: var(--space-5);
+  padding-top: 1rem;
+}
+
+.hero-ui {
+  padding-top: 1.1rem;
 }
 
 .eyebrow {
   display: inline-block;
-  margin-bottom: var(--space-3);
+  margin-bottom: 1.2rem;
   padding: 0.45rem 0.8rem;
-  border: 2px solid rgba(255, 228, 92, 0.5);
-  color: var(--accent-2);
-  background: rgba(255, 228, 92, 0.08);
+  color: var(--blue);
   font-family: "Press Start 2P", monospace;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
+  border: 2px solid rgba(89, 217, 255, 0.45);
+  background: rgba(11, 14, 34, 0.65);
+  box-shadow: inset 0 0 0 1px rgba(255, 95, 185, 0.22);
 }
 
-.hero h1,
+.hero-title,
 .page-title {
   margin: 0;
   font-family: "Press Start 2P", monospace;
+  font-size: clamp(1.9rem, 3vw, 3.7rem);
+  line-height: 1.2;
   text-transform: uppercase;
-  line-height: 1.18;
-  font-size: clamp(1.6rem, 4vw, 3.4rem);
-  text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.42);
+  text-shadow: 0 0 24px rgba(255, 95, 185, 0.32);
 }
 
-.hero p,
+.hero-ui p,
 .lede,
+.detail-copy p,
 .about-copy p,
-.detail-copy p {
+.section-intro p {
   margin: 0;
-  font-size: clamp(1.2rem, 2vw, 1.55rem);
   color: var(--muted);
-  line-height: 1.35;
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  line-height: 1.34;
 }
 
 .hero-copy {
@@ -239,134 +459,218 @@ img {
   gap: var(--space-4);
 }
 
-.hero-actions {
+.hero-frame {
+  position: relative;
+  padding: 1.8rem 1.7rem 1.7rem;
+  background: linear-gradient(180deg, rgba(9, 10, 32, 0.7), rgba(5, 7, 20, 0.28));
+}
+
+.hero-frame::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  top: 0;
+  height: 6px;
+  background: linear-gradient(90deg, transparent 0 4%, var(--pink) 4% 96%, transparent 96%);
+}
+
+.hero-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0.75rem;
+  border: 2px solid rgba(255, 95, 185, 0.58);
+  border-left-width: 0;
+  border-bottom-width: 0;
+  clip-path: polygon(0 8%, 8% 0, 100% 0, 100% 92%, 92% 100%, 0 100%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hero-actions,
+.detail-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: 1rem;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.2rem;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: #fefcff;
+  background: rgba(255, 95, 185, 0.14);
+  border: 2px solid rgba(255, 95, 185, 0.72);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 20px rgba(255, 95, 185, 0.14);
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
 }
 
 .button-link.alt {
-  border-color: var(--accent-2);
-  color: var(--accent-2);
+  background: rgba(89, 217, 255, 0.08);
+  border-color: rgba(89, 217, 255, 0.7);
+  color: var(--blue);
 }
 
-.status-panel {
-  padding: var(--space-4);
-  background:
-    linear-gradient(180deg, rgba(15, 31, 56, 0.98), rgba(7, 17, 34, 0.98));
+.button-link:hover,
+.button-link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 24px rgba(255, 95, 185, 0.24);
+  outline: none;
 }
 
-.status-grid {
+.stats-strip {
   display: grid;
-  gap: var(--space-3);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
 
-.stat-chip {
-  padding: var(--space-3);
-  border-radius: var(--radius-small);
-  background: rgba(9, 19, 39, 0.92);
+.stat-box {
+  padding: 1rem 1rem 1.1rem;
+  background: linear-gradient(180deg, rgba(10, 14, 39, 0.88), rgba(10, 10, 25, 0.54));
+  border: 2px solid rgba(89, 217, 255, 0.28);
+  box-shadow: var(--shadow);
 }
 
-.stat-label {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  color: var(--accent-2);
-  margin-bottom: 0.65rem;
+.stat-box strong,
+.stat-box span {
   display: block;
 }
 
-.stat-value {
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  color: var(--line);
+.stat-box strong {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.62rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
 }
 
-.section-head {
-  display: flex;
+.stat-box span {
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  color: var(--text);
+}
+
+.gallery-shell,
+.detail-shell,
+.about-shell {
+  margin-top: var(--space-7);
+}
+
+.section-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(240px, 0.8fr);
+  gap: var(--space-5);
   align-items: end;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin: var(--space-6) 0 var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
-.section-head h2 {
+.section-intro h2,
+.detail-title {
   margin: 0;
   font-family: "Press Start 2P", monospace;
-  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-size: clamp(1.05rem, 2vw, 1.45rem);
+  line-height: 1.5;
   text-transform: uppercase;
 }
 
-.section-head p {
-  margin: 0;
-  font-size: 1.25rem;
-  color: var(--muted);
+.section-rule {
+  height: 18px;
+  background:
+    linear-gradient(90deg, transparent 0 2%, var(--pink) 2% 90%, transparent 90%),
+    linear-gradient(90deg, transparent 0 8%, var(--blue) 8% 14%, transparent 14% 100%);
+  clip-path: polygon(0 50%, 3% 0, 96% 0, 100% 50%, 96% 100%, 3% 100%);
+  opacity: 0.92;
 }
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.3rem;
 }
 
 .gallery-card {
+  background: linear-gradient(180deg, rgba(10, 12, 31, 0.9), rgba(8, 8, 20, 0.62));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow);
   overflow: hidden;
-  display: grid;
-  gap: 0;
+}
+
+.gallery-card:nth-child(3n + 2) {
+  transform: translateY(1.2rem);
+}
+
+.gallery-card:nth-child(4n) {
+  transform: translateY(-0.8rem);
 }
 
 .gallery-card figure {
   margin: 0;
-  position: relative;
-  background:
-    linear-gradient(135deg, rgba(255, 77, 184, 0.2), rgba(101, 244, 255, 0.18));
 }
 
 .gallery-card img {
-  aspect-ratio: 5 / 4;
   width: 100%;
+  aspect-ratio: 5 / 4;
   object-fit: cover;
 }
 
 .gallery-card figcaption {
-  padding: var(--space-4);
+  padding: 1rem 1rem 1.2rem;
   display: grid;
-  gap: var(--space-2);
+  gap: 0.7rem;
 }
 
-.card-title,
-.detail-title {
-  margin: 0;
+.card-index {
   font-family: "Press Start 2P", monospace;
-  font-size: 0.86rem;
-  line-height: 1.6;
+  font-size: 0.58rem;
+  color: var(--gold);
   text-transform: uppercase;
 }
 
-.card-meta,
-.detail-meta {
-  color: var(--muted);
-  font-size: 1.2rem;
+.card-title {
+  margin: 0;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
 .card-link {
   justify-self: start;
-  margin-top: var(--space-2);
 }
 
-.panel {
-  padding: var(--space-5);
-}
-
-.detail-layout {
+.detail-shell,
+.about-shell {
   display: grid;
   gap: var(--space-5);
 }
 
+.detail-hero,
+.about-hero,
+.detail-stage,
+.detail-copy,
+.about-copy {
+  background: linear-gradient(180deg, rgba(10, 13, 36, 0.85), rgba(6, 7, 20, 0.56));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+}
+
+.detail-hero,
+.about-hero,
+.detail-copy,
+.about-copy {
+  padding: var(--space-5);
+}
+
 .detail-stage {
-  overflow: hidden;
-  padding: var(--space-3);
-  background:
-    linear-gradient(180deg, rgba(17, 36, 67, 0.95), rgba(8, 17, 31, 0.95));
+  padding: 1.4rem;
   display: flex;
   justify-content: center;
 }
@@ -377,51 +681,95 @@ img {
 
 .detail-stage img {
   width: 100%;
-  border-radius: calc(var(--radius) - 8px);
-  border: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 16px 38px rgba(0, 0, 0, 0.42);
 }
 
-.detail-copy,
-.about-copy {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-5);
-}
-
-.detail-nav {
+.detail-meta-line {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: 1rem;
+  color: var(--blue);
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
 }
 
 .footer {
-  margin-top: var(--space-6);
-  padding: var(--space-4) 0 0;
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
   color: var(--muted);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1120px) {
+  .feature-stage,
+  .section-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-left {
+    min-height: 560px;
+  }
+
+  .monitor {
+    width: min(48vw, 430px);
+  }
 }
 
 @media (max-width: 860px) {
   .shell {
     width: min(calc(100% - 1rem), var(--max-width));
-    padding-top: var(--space-4);
   }
 
-  .masthead,
-  .panel,
-  .detail-copy,
-  .about-copy {
-    padding: var(--space-4);
+  .shell::before,
+  .shell::after,
+  .poster-stack,
+  .media-pile {
+    display: none;
   }
 
-  .hero {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .showcase-left {
+    min-height: 440px;
+    padding: 0;
+  }
+
+  .showcase-desk {
+    inset: 0;
+  }
+
+  .monitor {
+    left: 12%;
+    top: 10%;
+    width: min(66vw, 420px);
+  }
+
+  .keyboard {
+    left: 6%;
+    right: 6%;
+    height: 170px;
+  }
+
+  .stats-strip {
     grid-template-columns: 1fr;
   }
 
-  .topbar,
-  .section-head {
-    align-items: start;
-    flex-direction: column;
+  .gallery-card:nth-child(3n + 2),
+  .gallery-card:nth-child(4n) {
+    transform: none;
+  }
+
+  .detail-hero,
+  .about-hero,
+  .detail-copy,
+  .about-copy {
+    padding: var(--space-4);
   }
 }
 
@@ -435,16 +783,17 @@ img {
   .nav a,
   .button-link {
     width: 100%;
-    text-align: center;
+    justify-content: center;
   }
 
-  .gallery-grid {
-    grid-template-columns: 1fr;
+  .monitor {
+    left: 8%;
+    width: 74vw;
   }
 
-  .hero h1,
+  .hero-title,
   .page-title {
-    font-size: 1.5rem;
+    font-size: 1.55rem;
   }
 }
 `.trimStart();
@@ -504,6 +853,8 @@ function renderLayout(options: {
   const stylesheetHref = relativePath(currentDir, path.join(assetsDir, "site.css"));
   const indexHref = relativePath(currentDir, path.join(websiteDir, "index.html"));
   const aboutHref = relativePath(currentDir, path.join(websiteDir, "about", "index.html"));
+  const isAbout = options.currentPath.endsWith(path.join("about", "index.html"));
+  const isIndex = options.currentPath.endsWith(path.join("website", "index.html"));
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -519,21 +870,19 @@ function renderLayout(options: {
   </head>
   <body${options.bodyClass ? ` class="${escapeHtml(options.bodyClass)}"` : ""}>
     <div class="shell">
-      <header class="masthead">
-        <div class="topbar">
-          <a class="brand" href="${indexHref}">
-            <span class="brand-mark" aria-hidden="true"></span>
-            <span>Amiga 500 Art</span>
-          </a>
-          <nav class="nav" aria-label="Primary">
-            <a href="${indexHref}">Gallery</a>
-            <a href="${aboutHref}">About</a>
-          </nav>
-        </div>
-        ${options.content}
+      <header class="topbar">
+        <a class="brand" href="${indexHref}">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Amiga 500 Art</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="${indexHref}"${isIndex ? ` aria-current="page"` : ""}>Gallery</a>
+          <a href="${aboutHref}"${isAbout ? ` aria-current="page"` : ""}>About</a>
+        </nav>
       </header>
+      ${options.content}
       <footer class="footer">
-        Commodore Amiga 500 artwork portfolio. Generated from the repository art archive.
+        Commodore Amiga 500 artwork portfolio. Static site generated from the repository archive.
       </footer>
     </div>
   </body>
@@ -579,11 +928,12 @@ function buildArtworks(): Artwork[] {
 
 function renderIndexPage(artworks: Artwork[]): string {
   const cards = artworks
-    .map((artwork) => {
+    .map((artwork, index) => {
       return `<article class="gallery-card">
   <figure>
     <img src="${artwork.imagePath}" alt="${escapeHtml(artwork.title)}">
     <figcaption>
+      <span class="card-index">Archive ${String(index + 1).padStart(3, "0")}</span>
       <h3 class="card-title">${escapeHtml(artwork.title)}</h3>
       <a class="button-link card-link" href="${artwork.detailPath}">Open Artwork</a>
     </figcaption>
@@ -597,40 +947,70 @@ function renderIndexPage(artworks: Artwork[]): string {
     description: "Retro gallery portfolio for Commodore Amiga 500 artwork.",
     currentPath: path.join(websiteDir, "index.html"),
     content: `
-      <section class="hero">
-        <div class="hero-copy">
-          <span class="eyebrow">Pixel Gallery</span>
-          <h1>Commodore Amiga 500 Artwork Archive</h1>
-          <p>A hobby portfolio built as a retro display cabinet for original Amiga 500 visuals, screenshots, and color-heavy experiments.</p>
-          <div class="hero-actions">
-            <a class="button-link" href="#gallery">Browse Gallery</a>
-            <a class="button-link alt" href="about/">About This Project</a>
+      <section class="feature-stage">
+        <div class="showcase-left" aria-hidden="true">
+          <div class="showcase-desk"></div>
+          <div class="poster-stack">
+            <div class="poster-card">
+              <strong>Another<br>World</strong>
+              <span>Pixel icon mood</span>
+            </div>
+            <div class="poster-card alt">
+              <strong>Shadow<br>Of The Beast</strong>
+              <span>Neon fantasy energy</span>
+            </div>
+          </div>
+          <div class="monitor">
+            <div class="monitor-screen">
+              <div class="monitor-ui"></div>
+            </div>
+          </div>
+          <div class="keyboard"></div>
+          <div class="media-pile">
+            <div class="media-card">
+              <strong>AMIGA<br>FORMAT</strong>
+              <span>Creative machine, forever luminous.</span>
+            </div>
           </div>
         </div>
-        <aside class="panel status-panel" aria-label="Portfolio stats">
-          <div class="status-grid">
-            <div class="stat-chip">
-              <span class="stat-label">Works Online</span>
-              <strong class="stat-value">${artworks.length}</strong>
-            </div>
-            <div class="stat-chip">
-              <span class="stat-label">Platform</span>
-              <strong class="stat-value">Amiga 500</strong>
-            </div>
-            <div class="stat-chip">
-              <span class="stat-label">Format</span>
-              <strong class="stat-value">PNG Archive</strong>
+        <div class="showcase-right">
+          <div class="hero-ui">
+            <span class="eyebrow">Portfolio Broadcast</span>
+            <div class="hero-frame">
+              <div class="hero-copy">
+                <h1 class="hero-title">A Neon Archive For Commodore Amiga 500 Artwork</h1>
+                <p>This collection is presented like an Amiga shrine: glowing horizon, collectible desk atmosphere, and a scrolling wall of original images captured from the archive.</p>
+                <div class="hero-actions">
+                  <a class="button-link" href="#gallery">Enter Gallery</a>
+                  <a class="button-link alt" href="about/">Read About</a>
+                </div>
+              </div>
             </div>
           </div>
-        </aside>
+          <div class="stats-strip" aria-label="Portfolio stats">
+            <div class="stat-box">
+              <strong>Works Online</strong>
+              <span>${artworks.length}</span>
+            </div>
+            <div class="stat-box">
+              <strong>Platform</strong>
+              <span>Amiga 500</span>
+            </div>
+            <div class="stat-box">
+              <strong>Format</strong>
+              <span>PNG</span>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section id="gallery" aria-labelledby="gallery-title">
-        <div class="section-head">
+      <section id="gallery" class="gallery-shell" aria-labelledby="gallery-title">
+        <div class="section-intro">
           <div>
-            <h2 id="gallery-title">Gallery Grid</h2>
-            <p>Filename-ordered snapshots from the repository art collection.</p>
+            <h2 id="gallery-title">Gallery Transmission</h2>
+            <p>A responsive archive wall of screenshots, arranged as collectible entries instead of plain thumbnails.</p>
           </div>
+          <div class="section-rule" aria-hidden="true"></div>
         </div>
         <div class="gallery-grid">
           ${cards}
@@ -646,16 +1026,17 @@ function renderAboutPage(): string {
     description: "About page for the Amiga 500 artwork portfolio.",
     currentPath: path.join(websiteDir, "about", "index.html"),
     content: `
-      <section class="detail-layout">
-        <div class="panel">
+      <section class="about-shell">
+        <div class="about-hero">
           <span class="eyebrow">About</span>
           <h1 class="page-title">Portfolio Notes</h1>
-          <p class="lede">This page is intentionally ready for later copy updates without needing layout changes.</p>
+          <p class="lede">A placeholder page ready for your own story, process, and context without redesigning the structure.</p>
         </div>
         <section class="about-copy" aria-label="About content">
-          <p>Add your biography, process notes, hardware setup, and project context here.</p>
-          <p>The page already shares the same retro shell as the gallery, so future content can stay simple: headings, paragraphs, links, and any extra sections you want to introduce later.</p>
-          <p>Suggested topics: how you created the artwork, what tools you used on the Amiga 500, and what this collection means in your broader creative portfolio.</p>
+          <h2 class="detail-title">What To Add Later</h2>
+          <p>Add your biography, process notes, hardware setup, and any creative context behind the work in this archive.</p>
+          <p>You can also describe how the images were produced, what software or workflows you used, and why the Amiga 500 still matters to your practice.</p>
+          <p>The page is intentionally simple so future content can expand without touching the layout generator.</p>
           <div>
             <a class="button-link" href="../index.html">Back To Gallery</a>
           </div>
@@ -681,8 +1062,8 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
     description: `${artwork.title} from the Commodore Amiga 500 artwork portfolio.`,
     currentPath: pagePath,
     content: `
-      <section class="detail-layout">
-        <div class="panel">
+      <section class="detail-shell">
+        <div class="detail-hero">
           <span class="eyebrow">Artwork Detail</span>
           <h1 class="page-title">${escapeHtml(artwork.title)}</h1>
           <p class="lede">Original resolution ${artwork.width} x ${artwork.height}</p>
@@ -694,7 +1075,11 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
         </section>
         <section class="detail-copy">
           <h2 class="detail-title">Archive Entry</h2>
-          <p>This dedicated page keeps the artwork at its original maximum display size, without enlarging it past the source file resolution.</p>
+          <div class="detail-meta-line">
+            <span>Original size ${artwork.width} x ${artwork.height}</span>
+            <span>Sequence ${String(currentIndex + 1).padStart(3, "0")}</span>
+          </div>
+          <p>This page keeps the image at its original maximum display size, preserving the source file without scaling it beyond its native resolution.</p>
           <div class="detail-nav">
             <a class="button-link" href="${indexHref}">Back To Gallery</a>
             <a class="button-link alt" href="${previousHref}">${previous ? "Previous Artwork" : "Gallery Start"}</a>
@@ -720,8 +1105,7 @@ function buildSite(): void {
   writePage(path.join(websiteDir, "index.html"), renderIndexPage(artworks));
   writePage(path.join(websiteDir, "about", "index.html"), renderAboutPage());
 
-  artworks.forEach((_, index) => {
-    const artwork = artworks[index];
+  artworks.forEach((artwork, index) => {
     writePage(path.join(websiteDir, artwork.detailPath), renderDetailPage(artworks, index));
   });
 }
