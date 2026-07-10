@@ -265,7 +265,6 @@ img {
 }
 
 .hero-copy p,
-.lede,
 .about-copy p,
 .detail-copy p {
   margin: 0;
@@ -603,7 +602,7 @@ function renderLayout(options: {
   const aboutHref = relativePath(currentDir, path.join(websiteDir, "about", "index.html"));
   const isAbout = options.currentPath.endsWith(path.join("about", "index.html"));
   const isIndex = options.currentPath.endsWith(path.join("website", "index.html"));
-  const keywords = options.keywords ?? "Amiga 500 art work, Commodore Amiga art, Amiga 500 portfolio, Deluxe Paint artwork, retro computer art";
+  const keywords = options.keywords ?? "Amiga 500 artwork, Commodore Amiga art, Amiga 500 portfolio, Deluxe Paint artwork, retro computer art";
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -700,19 +699,19 @@ function renderIndexPage(artworks: Artwork[]): string {
     .join("\n");
 
   return renderLayout({
-    pageTitle: "Commodore Amiga 500 Art Work Portfolio | Deluxe Paint Gallery",
-    description: "Personal Commodore Amiga 500 art work portfolio featuring 1991 Deluxe Paint, Brilliance, and Amiga BASIC artwork recovered from original Amiga images.",
-    keywords: "Amiga 500 art work, Commodore Amiga 500 artwork, Deluxe Paint gallery, Brilliance Amiga art, Amiga BASIC art, retro computer art portfolio",
+    pageTitle: "Commodore Amiga 500 Artwork Portfolio | Deluxe Paint Gallery",
+    description: "Personal Commodore Amiga 500 artwork portfolio featuring 1991 Deluxe Paint, Brilliance, and Amiga BASIC artwork recovered from original Amiga images.",
+    keywords: "Amiga 500 artwork, Commodore Amiga 500 artwork, Deluxe Paint gallery, Brilliance Amiga art, Amiga BASIC art, retro computer art portfolio",
     currentPath: path.join(websiteDir, "index.html"),
     content: `
       <section class="hero-shell">
         <div class="hero-visual">
-          <img src="assets/${heroPublishedName}" alt="Retro Commodore Amiga 500 art work desk with Deluxe Paint and Amiga BASIC floppies">
+          <img src="assets/${heroPublishedName}" alt="Retro Commodore Amiga 500 artwork desk with Deluxe Paint and Amiga BASIC floppies">
         </div>
         <div class="hero-copy">
           <span class="eyebrow">Personal Portfolio</span>
           <div class="hero-frame">
-            <h1 class="hero-title">Commodore Amiga 500 Art Work</h1>
+            <h1 class="hero-title">Commodore Amiga 500 Artwork</h1>
             <p>This site is a personal portfolio for my Amiga 500 creative work.</p>
             <div class="hero-actions">
               <a class="button-link" href="#portfolio">Browse Work</a>
@@ -744,9 +743,9 @@ function renderIndexPage(artworks: Artwork[]): string {
 
 function renderAboutPage(): string {
   return renderLayout({
-    pageTitle: "About The Amiga 500 Art Work | Commodore Portfolio",
-    description: "About this personal Amiga 500 art work archive created in 1991 with Deluxe Paint, Brilliance, and Amiga BASIC on a Commodore Amiga 500 Plus.",
-    keywords: "about Amiga 500 art work, Commodore Amiga 500 Plus, Deluxe Paint artwork, Brilliance artwork, Amiga BASIC post processing",
+    pageTitle: "About The Amiga 500 Artwork | Commodore Portfolio",
+    description: "About this personal Amiga 500 artwork archive created in 1991 with Deluxe Paint, Brilliance, and Amiga BASIC on a Commodore Amiga 500 Plus.",
+    keywords: "about Amiga 500 artwork, Commodore Amiga 500 Plus, Deluxe Paint artwork, Brilliance artwork, Amiga BASIC post processing",
     currentPath: path.join(websiteDir, "about", "index.html"),
     content: `
       <section class="about-shell">
@@ -779,20 +778,19 @@ function renderDetailPage(artworks: Artwork[], currentIndex: number): string {
   const nextHref = next ? relativePath(pageDir, path.join(websiteDir, next.detailPath)) : indexHref;
 
   return renderLayout({
-    pageTitle: `${artwork.title} | Commodore Amiga 500 Art Work`,
-    description: `${artwork.title} from a personal Commodore Amiga 500 art work portfolio created with Deluxe Paint, Brilliance, and Amiga BASIC.`,
-    keywords: `${artwork.title}, Amiga 500 art work, Commodore Amiga artwork, Deluxe Paint image, Brilliance Amiga art, retro computer art`,
+    pageTitle: `${artwork.title} | Commodore Amiga 500 Artwork`,
+    description: `${artwork.title} from a personal Commodore Amiga 500 artwork portfolio created with Deluxe Paint, Brilliance, and Amiga BASIC.`,
+    keywords: `${artwork.title}, Amiga 500 artwork, Commodore Amiga artwork, Deluxe Paint image, Brilliance Amiga art, retro computer art`,
     currentPath: pagePath,
     content: `
       <section class="detail-shell">
         <div class="detail-hero">
           <span class="eyebrow">Artwork Detail</span>
           <h1 class="page-title">${escapeHtml(artwork.title)}</h1>
-          <p class="lede">Original resolution ${artwork.width} x ${artwork.height}</p>
         </div>
         <section class="detail-stage">
           <div class="detail-media" style="--art-width: ${artwork.width}px;">
-            <img src="${imageHref}" alt="${escapeHtml(`${artwork.title} - Commodore Amiga 500 art work`)}" width="${artwork.width}" height="${artwork.height}">
+            <img src="${imageHref}" alt="${escapeHtml(`${artwork.title} - Commodore Amiga 500 artwork`)}" width="${artwork.width}" height="${artwork.height}">
           </div>
         </section>
         <section class="detail-copy">
