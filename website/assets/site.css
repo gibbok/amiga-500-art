@@ -124,7 +124,7 @@ img {
 .topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: right;
   gap: var(--space-3);
   margin-bottom: var(--space-5);
 }
@@ -371,7 +371,7 @@ img {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.3rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .portfolio-card {
@@ -379,6 +379,7 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow);
   overflow: hidden;
+  height: 100%;
 }
 
 .portfolio-card:nth-child(3n + 2) {
@@ -390,7 +391,10 @@ img {
 }
 
 .portfolio-card figure {
+  height: 100%;
   margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .portfolio-media {
@@ -408,14 +412,10 @@ img {
 .portfolio-card figcaption {
   padding: 1rem 1rem 1.2rem;
   display: grid;
+  grid-template-rows: minmax(2.8rem, auto) 1fr;
   gap: 0.7rem;
-}
-
-.card-index {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.58rem;
-  color: var(--gold);
-  text-transform: uppercase;
+  min-height: 8rem;
+  align-content: start;
 }
 
 .card-title {
@@ -424,6 +424,12 @@ img {
   font-size: 0.88rem;
   line-height: 1.55;
   text-transform: uppercase;
+  min-height: 2.8rem;
+}
+
+.portfolio-card .button-link {
+  align-self: end;
+  justify-self: start;
 }
 
 .detail-shell,
@@ -496,6 +502,7 @@ img {
   .topbar {
     flex-direction: column;
     align-items: flex-start;
+    justify-content: right;
   }
 
   .identity-panel,

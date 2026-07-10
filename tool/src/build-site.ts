@@ -148,7 +148,7 @@ img {
 .topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: right;
   gap: var(--space-3);
   margin-bottom: var(--space-5);
 }
@@ -395,7 +395,7 @@ img {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.3rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .portfolio-card {
@@ -403,6 +403,7 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow);
   overflow: hidden;
+  height: 100%;
 }
 
 .portfolio-card:nth-child(3n + 2) {
@@ -414,7 +415,10 @@ img {
 }
 
 .portfolio-card figure {
+  height: 100%;
   margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .portfolio-media {
@@ -432,14 +436,10 @@ img {
 .portfolio-card figcaption {
   padding: 1rem 1rem 1.2rem;
   display: grid;
+  grid-template-rows: minmax(2.8rem, auto) 1fr;
   gap: 0.7rem;
-}
-
-.card-index {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.58rem;
-  color: var(--gold);
-  text-transform: uppercase;
+  min-height: 8rem;
+  align-content: start;
 }
 
 .card-title {
@@ -448,6 +448,12 @@ img {
   font-size: 0.88rem;
   line-height: 1.55;
   text-transform: uppercase;
+  min-height: 2.8rem;
+}
+
+.portfolio-card .button-link {
+  align-self: end;
+  justify-self: start;
 }
 
 .detail-shell,
@@ -520,6 +526,7 @@ img {
   .topbar {
     flex-direction: column;
     align-items: flex-start;
+    justify-content: right;
   }
 
   .identity-panel,
@@ -638,9 +645,6 @@ function renderLayout(options: {
   <body${options.bodyClass ? ` class="${escapeHtml(options.bodyClass)}"` : ""}>
     <div class="shell">
       <header class="topbar">
-        <a class="brand" href="${indexHref}">
-          <span>Amiga 500 Art Portfolio</span>
-        </a>
         <nav class="nav" aria-label="Primary">
           <a href="${indexHref}"${isIndex ? ` aria-current="page"` : ""}>Portfolio</a>
           <a href="${aboutHref}"${isAbout ? ` aria-current="page"` : ""}>About</a>
@@ -694,14 +698,13 @@ function buildArtworks(): Artwork[] {
 
 function renderIndexPage(artworks: Artwork[]): string {
   const cards = artworks
-    .map((artwork, index) => {
+    .map((artwork) => {
       return `<article class="portfolio-card">
   <figure>
     <div class="portfolio-media">
       <img src="${artwork.imagePath}" alt="${escapeHtml(artwork.title)}">
     </div>
     <figcaption>
-      <span class="card-index">Entry ${String(index + 1).padStart(3, "0")}</span>
       <h3 class="card-title">${escapeHtml(artwork.title)}</h3>
       <a class="button-link" href="${artwork.detailPath}">View Piece</a>
     </figcaption>
@@ -726,7 +729,7 @@ function renderIndexPage(artworks: Artwork[]): string {
         <div class="hero-copy">
           <span class="eyebrow">Personal Portfolio</span>
           <div class="hero-frame">
-            <h1 class="hero-title">Commodore Amiga 500 Work</h1>
+            <h1 class="hero-title">Commodore Amiga 500 Art Work</h1>
             <p>This site is a personal portfolio for my Amiga 500 creative work.</p>
             <div class="hero-actions">
               <a class="button-link" href="#portfolio">Browse Work</a>
@@ -734,11 +737,11 @@ function renderIndexPage(artworks: Artwork[]): string {
             </div>
           </div>
           <aside class="identity-panel" aria-label="Portfolio identity">
-            <strong>What This Site Is</strong>
+            <strong>About These Artworks</strong>
             <ul>
-              <li>A personal showcase, not a neutral stock gallery.</li>
-              <li>An archive of Amiga 500 images generated from the repository artwork folder.</li>
-              <li>A retro presentation with a stronger sense of place and memory.</li>
+              <li>Created in 1991 on an Amiga 500 Plus with Deluxe Paint.</li>
+              <li>Enhanced with Brilliance.</li>
+              <li>Post-processed with Amiga BASIC.</li>
             </ul>
           </aside>
         </div>
