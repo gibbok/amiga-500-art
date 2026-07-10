@@ -390,12 +390,41 @@ img {
 }
 
 .portfolio-head h2,
-.detail-title {
+.detail-title,
+.video-title {
   margin: 0;
   font-family: "Press Start 2P", monospace;
   font-size: clamp(1.02rem, 2vw, 1.42rem);
   line-height: 1.5;
   text-transform: uppercase;
+}
+
+.video-title {
+  margin-top: var(--space-5);
+  color: var(--text);
+}
+
+.video-grid {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(92, 232, 255, 0.28);
+  background: rgba(5, 6, 14, 0.7);
+}
+
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .portfolio-grid {
@@ -793,6 +822,18 @@ function renderAboutPage(): string {
           <p>I also post-processed some of the images with small Amiga BASIC programs, mostly to try out simple effects and see how far I could push the images after drawing them.</p>
           <p>Some images were enhanced using custom 3x3 convolution filters available in Deluxe Paint and Brilliance, allowing effects such as sharpening, embossing, and edge detection.</p>
           <p>I also experimented with animation, using an onion-skin-like workflow by keeping multiple frames visible on screen while drawing and coloring each frame.</p>
+          <h2 class="video-title">Interesting Videos</h2>
+          <div class="video-grid" aria-label="Interesting videos">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/ws3DJF7MbMU" title="Interesting Amiga video 1" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/FF-mEuLfgtQ" title="Interesting Amiga video 2" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/PcS_3SoWaeM" title="Interesting Amiga video 3" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+          </div>
           <div>
             <a class="button-link" href="../index.html">Back To Portfolio</a>
           </div>
