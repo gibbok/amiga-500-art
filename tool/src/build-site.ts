@@ -293,6 +293,10 @@ img {
   line-height: 1.34;
 }
 
+.about-copy p + p {
+  margin-top: 0.95rem;
+}
+
 .hero-actions,
 .detail-nav {
   display: flex;
@@ -772,8 +776,8 @@ function renderIndexPage(artworks: Artwork[]): string {
 function renderAboutPage(): string {
   return renderLayout({
     pageTitle: "About The Amiga 500 Artwork | Commodore Portfolio",
-    description: "About this personal Amiga 500 artwork archive created in 1991 with Deluxe Paint, Brilliance, and Amiga BASIC on a Commodore Amiga 500 Plus.",
-    keywords: "about Amiga 500 artwork, Commodore Amiga 500 Plus, Deluxe Paint artwork, Brilliance artwork, Amiga BASIC post processing",
+    description: "About this personal Amiga 500 artwork archive, drawn by hand in Deluxe Paint and recovered from old VHS tape backups.",
+    keywords: "about Amiga 500 artwork, Commodore Amiga 500 Plus, Deluxe Paint artwork, Brilliance artwork, VHS tape backups, pixel art process",
     currentPath: path.join(websiteDir, "about", "index.html"),
     content: `
       <section class="about-shell">
@@ -782,9 +786,13 @@ function renderAboutPage(): string {
           <h1 class="page-title">Portfolio Notes</h1>
         </div>
         <section class="about-copy" aria-label="About content">
-          <p>These are some of the artworks I created in 1991 on my Amiga 500 Plus. I mainly used Deluxe Paint and Brilliance, with additional post-processing in Amiga BASIC.</p>
-          <p>At the time, my Amiga had two floppy drives and 2 MB of RAM.</p>
-          <p>The images in this portfolio were recovered from VHS backups recorded from my Amiga. This is why some of them appear slightly blurred.</p>
+          <p>These are some of the artworks I made on my Amiga 500 Plus more than 30 years ago. They are images I used to draw back then, mostly in Deluxe Paint and Brilliance.</p>
+          <p>The artworks were recovered from VHS tape backups made from my Amiga. The slight blur and analog artifacts are part of the original preservation process, so I kept that feeling instead of trying to make everything look too clean.</p>
+          <p>Back then there was no Photoshop, no internet, and no GPU acceleration. Every pixel was placed by hand using Deluxe Paint. At the time, my Amiga had two floppy drives and 2 MB of RAM.</p>
+          <p>One thing I liked doing was making small patterns of color and dragging the pixels across the screen like a brush. It was a very manual way of drawing, but it gave the images their texture.</p>
+          <p>I also post-processed some of the images with small Amiga BASIC programs, mostly to try out simple effects and see how far I could push the images after drawing them.</p>
+          <p>Some images were enhanced using custom 3x3 convolution filters available in Deluxe Paint and Brilliance, allowing effects such as sharpening, embossing, and edge detection.</p>
+          <p>I also experimented with animation, using an onion-skin-like workflow by keeping multiple frames visible on screen while drawing and coloring each frame.</p>
           <div>
             <a class="button-link" href="../index.html">Back To Portfolio</a>
           </div>
