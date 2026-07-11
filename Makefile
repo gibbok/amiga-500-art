@@ -1,4 +1,4 @@
-.PHONY: install build serve deploy-help
+.PHONY: install build serve report
 
 install:
 	npm ci
@@ -8,3 +8,6 @@ build:
 
 serve:
 	npm run serve:site
+
+report:
+	npm run report:duplicates

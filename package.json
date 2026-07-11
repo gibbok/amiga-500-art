@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build:site": "tsc -p tsconfig.json && node tool/dist/build-site.js",
+    "report:duplicates": "tsc -p tsconfig.json && node tool/dist/report-duplicates.js",
     "serve:site": "npm run build:site && http-server website"
   },
   "devDependencies": {
