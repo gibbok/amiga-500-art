@@ -245,7 +245,9 @@ function renderIndexPage(artworks: Artwork[]): string {
       return `<article class="portfolio-card">
   <figure>
     <div class="portfolio-media">
-      <img src="${artwork.imagePath}" alt="${escapeHtml(`${artwork.title} - Amiga 500 artwork`)}">
+      <a class="portfolio-media-link" href="${artwork.detailPath}" aria-label="View ${escapeHtml(artwork.title)} details">
+        <img src="${artwork.imagePath}" alt="${escapeHtml(`${artwork.title} - Amiga 500 artwork`)}">
+      </a>
     </div>
     <figcaption>
       <h3 class="card-title">${escapeHtml(artwork.title)}</h3>

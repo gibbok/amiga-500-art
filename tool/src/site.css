@@ -427,6 +427,17 @@ img {
   overflow: hidden;
 }
 
+.portfolio-media-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.portfolio-media-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
 .portfolio-media img {
   position: absolute;
   inset: 0;
